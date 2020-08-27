@@ -14,3 +14,4 @@ class Gripper:
         self.motor.wait_until_not_moving(300)
 
     def getColors(self):
+        pass
