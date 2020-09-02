@@ -10,8 +10,21 @@ class Gripper:
         self.color2 = ColorSensor(self.rc.COLOR_RECOGNITION2)
     
     def lowerMotor(self, speed):
+        speed *= -1
         self.motor.on(speed, block=False)
         self.motor.wait_until_not_moving(300)
 
+    def moveMotor(self, speed, degrees):
+        self.motor.on_for_degrees(speed, degrees)
+
     def getColors(self):
-        pass
+        values = []
+        def getColor(color):
+            if(color[1] < color[2]):
+                return "Blue"
+            else:
+                return "Green"
+            return "No color"
+        values.append(getColor(self.color1.rgb))
+        values.append(getColor(self.color2.rgb))
+        return values
