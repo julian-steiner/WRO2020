@@ -51,7 +51,6 @@ class DriveTrain:
         states = self.getSensorStates(StopColor)
         while states[0]!= 1 or states[1] != 1:
             states = self.getSensorStates(StopColor)
-            print(states)
             self.followLine(-20, 9, LineColor, 0)
 
     def driveForward(self, speed, distance):
