@@ -2,6 +2,7 @@
 from DriveTrain import DriveTrain
 from ev3dev2.sound import Sound
 from Gripper import Gripper
+from Gripper2 import Gripper2
 import time
 
 driveTrain = DriveTrain()
