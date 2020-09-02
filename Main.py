@@ -6,7 +6,7 @@ import time
 driveTrain = DriveTrain()
 gripper = Gripper()
 
-gripper.lowerMotor(30)
+from Gripper2 import Gripper2
 driveTrain.driveToLine(-20, 8, ["Green", "Blue"], ["Black", "Brown"])
 driveTrain.driveForward(-40, 13)
 driveTrain.turnAngle(-20, 90)
@@ -20,3 +20,10 @@ driveTrain.driveToLine(-20, 10, ["Black", "Brown"],["Black", "Brown"])
 gripper.lowerMotor(-30)
 driveTrain.driveForward(-20, 15)
 gripper.lowerMotor(-40)
+
+gripper2 = Gripper2()
+print("*")
+gripper2.movemotor(30,True)
+time.sleep(2)
+gripper2.movemotor(30,False)
+time.sleep(10)
