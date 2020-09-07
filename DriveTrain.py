@@ -58,8 +58,7 @@ class DriveTrain:
         self.tank_drive.on_for_rotations(SpeedPercent(speed), SpeedPercent(speed), rotations)
     
     def turnAngle(self, speed, angle):
-        distance = (self.rc.WHEEL_DISTANCE * 3.14159 * angle) / 360
-        rotations = distance / (self.rc.WHEEL_DIAMETER * 3.14159) 
+        rotations = angle * (self.rc.WHEEL_DISTANCE / (self.rc.WHEEL_DIAMETER*360))
         self.tank_drive.on_for_rotations(SpeedPercent(speed), SpeedPercent(-speed), rotations)
 
     def getSensorStates(self, colors):

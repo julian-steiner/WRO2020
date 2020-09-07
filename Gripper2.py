@@ -18,6 +18,6 @@ class Gripper2:
         self.motor.on(SpeedPercent(speed))
     
     def EvacuateOrder(self,speed):
-        self.motor.on_for_degrees(SpeedPercent(speed),)
+        self.motor.on_for_degrees(SpeedPercent(speed), 50)
         
         
