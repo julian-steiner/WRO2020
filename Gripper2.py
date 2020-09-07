@@ -1,6 +1,7 @@
 from ev3dev2.motor import MediumMotor, SpeedPercent
 from ev3dev2.sensor.lego import ColorSensor
 import RobotContainer as rc
+import time
 
 class Gripper2:
     def __init__(self):
@@ -18,6 +19,6 @@ class Gripper2:
         self.motor.on(SpeedPercent(speed))
     
     def EvacuateOrder(self,speed):
-        self.motor.on_for_degrees(SpeedPercent(speed), 50)
-        
-        
+        self.motor.on_for_degrees(SpeedPercent(speed),-140)
+        time.sleep(0.5)
+        self.motor.on_for_degrees(SpeedPercent(speed),140)
