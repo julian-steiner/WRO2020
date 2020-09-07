@@ -12,7 +12,7 @@ test = Sound()
 gripper.lowerMotor(-30) #Configure Gripper
 driveTrain.driveToLine(-20, 8, ["Green", "Blue"], ["Black", "Brown"])
 driveTrain.driveForward(-40, 13)
-driveTrain.turnAngle(-20, 90)
+driveTrain.turnAngle(-20, 100)
 driveTrain.followLine(-20, 9, ["Black", "Brown"], 10)
 driveTrain.driveForward(-40, -40)
 driveTrain.driveForward(-20, -7)
