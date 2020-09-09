@@ -4,6 +4,7 @@ import RobotContainer
 
 class DriveTrain:
     def __init__(self):
+    
         self.rc = RobotContainer.RobotContainer()
         self.driveColorLeft = ColorSensor(self.rc.DRIVE_COLOR_LEFT)
         self.driveColorRight = ColorSensor(self.rc.DRIVE_COLOR_RIGHT)
@@ -51,7 +52,7 @@ class DriveTrain:
         states = self.getSensorStates(StopColor)
         while states[0]!= 1 or states[1] != 1:
             states = self.getSensorStates(StopColor)
-            self.followLine(-20, 9, LineColor, 0)
+            self.followLine(speed, aggression, LineColor, 0)
 
     def driveForward(self, speed, distance):
         rotations = distance / (self.rc.WHEEL_DIAMETER * 3.14159)

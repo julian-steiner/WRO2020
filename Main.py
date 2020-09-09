@@ -9,11 +9,15 @@ driveTrain = DriveTrain()
 gripper = Gripper()
 test = Sound()
 gripper2 = Gripper2()
+def program():
+    driveTrain.driveForward(-50,28)
+    driveTrain.turnAngle(-20, 92)
+    driveTrain.driveToLine(-20, 4, ["Green", "Blue"], ["Black", "Brown"])
+    driveTrain.turnAngle(-20, 180)
+    driveTrain.driveForward(30, 29)
+    print(gripper.color2.color_name)
 
-driveTrain.driveForward(50,28)
-driveTrain.turnAngle(50,-90)
-time.sleep(0.1)
-driveTrain.driveForward(50,46)
+program() 
 
 # gripper.lowerMotor(-30) #Configure Gripper
 # driveTrain.driveToLine(-20, 8, ["Green", "Blue"], ["Black", "Brown"])
