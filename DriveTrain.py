@@ -11,6 +11,7 @@ class DriveTrain:
         self.driveLeft = LargeMotor(self.rc.DRIVE_LEFT)
         self.driveRight = LargeMotor(self.rc.DRIVE_RIGHT)
         self.tank_drive = MoveTank(self.rc.DRIVE_LEFT, self.rc.DRIVE_RIGHT)
+        self.tank_drive.set_polarity('inversed')
     
     def followLine(self, speed, aggression, LineColor, distance):
         def lineDrive():
@@ -48,11 +49,19 @@ class DriveTrain:
                     dist *= -1
                 lineDrive()
 
-    def driveToLine(self, speed, aggression, LineColor, StopColor):
+    def followToLine(self, speed, aggression, LineColor, StopColor):
         states = self.getSensorStates(StopColor)
         while states[0]!= 1 or states[1] != 1:
             states = self.getSensorStates(StopColor)
             self.followLine(speed, aggression, LineColor, 0)
+
+    def driveToLine(self, speed,  StopColor):
+        states = self.getSensorStates(StopColor)
+        while states[0]!= 1 or states[1] != 1:
+            states = self.getSensorStates(StopColor)
+            self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
+        print(states)
+
 
     def driveForward(self, speed, distance):
         rotations = distance / (self.rc.WHEEL_DIAMETER * 3.14159)
