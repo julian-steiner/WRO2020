@@ -16,8 +16,11 @@ def program():
     driveTrain.turnAngle(-20, 180)
     driveTrain.driveForward(30, 29)
     print(gripper.color2.color_name)
+while True:
+    input("")
+    print(gripper.RomerColor())
 
-program() 
+#program() 
 
 # gripper.lowerMotor(-30) #Configure Gripper
 # driveTrain.driveToLine(-20, 8, ["Green", "Blue"], ["Black", "Brown"])

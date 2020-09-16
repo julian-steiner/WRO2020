@@ -28,3 +28,38 @@ class Gripper:
         values.append(getColor(self.color1.rgb))
         values.append(getColor(self.color2.rgb))
         return values
+
+    def newColor(self):
+        v = []
+        def gettinColor(color):
+            if color[0] < 1 and color [1] < 1 and color [2] < 1:
+                return "no color"
+            if color[1] > color[2] and color[1] > color[0]:
+                return "green"
+            if color[2] > color[0] and color[2] > color[1]:
+                return "blue"
+            else:
+                return "no color"
+        v.append(gettinColor(self.color2.rgb))
+        return v
+    
+    def RomerColor(self):
+        for i in range(10):
+            c1 = self.color1.rgb
+            c2 = self.color2.rgb
+            c = [[0, 0, 3], [0, 3, 0], [0, 0, 0]]
+            # 0 = blue, 1 = green, 2 = no color
+            diff1 = []
+            diff2 = []
+            for i in range(len(c)):
+                v1 = 0
+                v2 = 0
+                for j in range(3):
+                    v1 += (c[i][j] - c1[j])**2
+                    v2 += (c[i][j] - c2[j])**2
+                diff1.append(v1)
+                diff2.append(v2)
+            diff2.index(min(diff2))
+        
+
+
