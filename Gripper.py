@@ -33,7 +33,7 @@ class Gripper:
         for i in range(10):
             c1 = self.color1.rgb
             c2 = self.color2.rgb
-            c = [[0, 0, 3], [0, 3, 0], [0, 0, 0]]
+            c = [[23, 73, 147], [15, 87, 29], [6, 3, 8]]
             # 0 = blue, 1 = green, 2 = no color
             diff1 = []
             diff2 = []
@@ -45,4 +45,7 @@ class Gripper:
                     v2 += (c[i][j] - c2[j])**2
                 diff1.append(v1)
                 diff2.append(v2)
-            diff2.index(min(diff2))
+            indeces = []
+            indeces.append(diff1.index(min(diff1)))
+            indeces.append(diff2.index(min(diff2)))
+            return indeces

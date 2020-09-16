@@ -11,11 +11,7 @@ class RobotContainer:
     COLOR_RECOGNITION = INPUT_1
     COLOR_RECOGNITION2 = INPUT_2
     WHEEL_DIAMETER = 5.5
-<<<<<<< HEAD
     WHEEL_DISTANCE = 12.3
-=======
-    WHEEL_DISTANCE = 12.1
->>>>>>> newRobot
     def __init__(self):
         pass
 

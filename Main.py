@@ -7,27 +7,21 @@ import time
 
 driveTrain = DriveTrain()
 gripper = Gripper()
-<<<<<<< HEAD
 
 line = ["Black", "Brown"]
 blueLine = ["Green", "Blue"]
-driveTrain.driveForward(20, 29)
+speed = 30
+driveTrain.driveForward(speed, 29)
 driveTrain.turnAngle(20, 90)
-driveTrain.followToLine(20, 4, blueLine, line)
-driveTrain.driveForward(20, 20)
-print()
-=======
-test = Sound()
-gripper2 = Gripper2()
-def program():
-    driveTrain.driveForward(-50,28)
-    driveTrain.turnAngle(-20, 92)
-    driveTrain.driveToLine(-20, 4, ["Green", "Blue"], ["Black", "Brown"])
-    driveTrain.turnAngle(-20, 180)
-    driveTrain.driveForward(30, 29)
-    print(gripper.color2.color_name)
+driveTrain.followToLine(speed, 2, blueLine, line)
+driveTrain.driveForward(speed, 15)
+color = gripper.RomerColor()[0]
+if(color != 2):
+        driveTrain.driveForward(-50, 12)
+        driveTrain.driveForward(100, 10)
+print(color)
 
-program() 
->>>>>>> newRobot
-
-
+# while True:
+#     input("")
+#     print(gripper.color1.rgb)
+#     print(gripper.RomerColor()[0])

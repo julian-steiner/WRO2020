@@ -59,13 +59,7 @@ class DriveTrain:
         states = self.getSensorStates(StopColor)
         while states[0]!= 1 or states[1] != 1:
             states = self.getSensorStates(StopColor)
-<<<<<<< HEAD
             self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
-        print(states)
-
-=======
-            self.followLine(speed, aggression, LineColor, 0)
->>>>>>> newRobot
 
     def driveForward(self, speed, distance):
         rotations = distance / (self.rc.WHEEL_DIAMETER * 3.14159)
