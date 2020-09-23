@@ -30,6 +30,14 @@ class Gripper:
         return values
 
     def RomerColor(self):
+        def convertColor(num):
+            if num == 0:
+                return "Blue"
+            elif num == 1:
+                return "Green"
+            elif num == 2:
+                return "None"
+
         for i in range(10):
             c1 = self.color1.rgb
             c2 = self.color2.rgb
@@ -46,6 +54,7 @@ class Gripper:
                 diff1.append(v1)
                 diff2.append(v2)
             indeces = []
-            indeces.append(diff1.index(min(diff1)))
-            indeces.append(diff2.index(min(diff2)))
+            indeces.append(convertColor(diff1.index(min(diff1))))
+            indeces.append(convertColor(diff2.index(min(diff2))))
             return indeces
+    
