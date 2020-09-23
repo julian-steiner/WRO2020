@@ -33,7 +33,7 @@ class Gripper:
         for i in range(10):
             c1 = self.color1.rgb
             c2 = self.color2.rgb
-            c = [[23, 73, 147], [15, 87, 29], [6, 3, 8]]
+            c = [[11, 35, 90], [8, 60, 20], [6, 3, 5]]
             # 0 = blue, 1 = green, 2 = no color
             diff1 = []
             diff2 = []

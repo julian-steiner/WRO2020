@@ -17,8 +17,9 @@ driveTrain.followToLine(speed, 2, blueLine, line)
 driveTrain.driveForward(speed, 15)
 color = gripper.RomerColor()[0]
 if(color != 2):
-        driveTrain.driveForward(-50, 12)
-        driveTrain.driveForward(100, 10)
+        driveTrain.driveForward(-100, 7)
+        driveTrain.driveForward(100, 7)
+
 print(color)
 
 # while True:
