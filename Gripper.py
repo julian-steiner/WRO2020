@@ -30,10 +30,18 @@ class Gripper:
         return values
 
     def RomerColor(self):
+        def convertColor(num):
+            if num == 0:
+                return "Blue"
+            elif num == 1:
+                return "Green"
+            elif num == 2:
+                return "None"
+
         for i in range(10):
             c1 = self.color1.rgb
             c2 = self.color2.rgb
-            c = [[23, 73, 147], [15, 87, 29], [6, 3, 8]]
+            c = [[11, 35, 90], [8, 60, 20], [6, 3, 5]]
             # 0 = blue, 1 = green, 2 = no color
             diff1 = []
             diff2 = []
@@ -46,6 +54,7 @@ class Gripper:
                 diff1.append(v1)
                 diff2.append(v2)
             indeces = []
-            indeces.append(diff1.index(min(diff1)))
-            indeces.append(diff2.index(min(diff2)))
+            indeces.append(convertColor(diff1.index(min(diff1))))
+            indeces.append(convertColor(diff2.index(min(diff2))))
             return indeces
+    
