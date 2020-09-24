@@ -35,6 +35,7 @@ class DriveTrain:
         else:
             self.driveLeft.reset()
             self.driveRight.reset()
+            self.tank_drive.set_polarity("inversed")
             motor1 = self.driveLeft.rotations
             motor2 = self.driveRight.rotations
             dist = (motor1 + motor2) / 2
@@ -79,6 +80,7 @@ class DriveTrain:
 
     def setConfigs(self, speed):
         self.tank_drive.reset()
+        self.tank_drive.set_polarity("inversed")
         self.tank_drive.on(speed, -speed)
         print("Started")
         while self.driveColorRight.color_name not in ['Black', 'Brown']:

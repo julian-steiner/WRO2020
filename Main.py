@@ -13,10 +13,11 @@ blueLine = ["Green", "Blue"]
 speed = 30
 aggression = 2
 
-driveTrain.driveForward(speed, 29)
+driveTrain.driveForward(speed, 27)
 driveTrain.turnAngle(20, 90)
 driveTrain.followToLine(speed, aggression, blueLine, line)
-driveTrain.driveForward(speed, 15)
+# driveTrain.driveForward(speed, 15)
+driveTrain.followLine(speed, aggression, line, 15)
 color = gripper.RomerColor()[0]
 print(color)
 if(color != "None"):
@@ -32,7 +33,7 @@ else:
         print(gripper.RomerColor()[0])
         print(color)
         time.sleep(2)
-        gripper.lowerMotor(-100)
+        gripper.moveMotor(40, 200)
 
 # while True:
 #     input("")
