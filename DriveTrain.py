@@ -11,7 +11,7 @@ class DriveTrain:
         self.driveLeft = LargeMotor(self.rc.DRIVE_LEFT)
         self.driveRight = LargeMotor(self.rc.DRIVE_RIGHT)
         self.tank_drive = MoveTank(self.rc.DRIVE_LEFT, self.rc.DRIVE_RIGHT)
-        self.tank_drive.set_polarity('inversed')
+        self.tank_drive.set_polarity("inversed")
     
     def followLine(self, speed, aggression, LineColor, distance):
         def lineDrive():
