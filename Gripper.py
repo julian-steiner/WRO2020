@@ -10,7 +10,6 @@ class Gripper:
         self.color2 = ColorSensor(self.rc.COLOR_RECOGNITION2)
     
     def lowerMotor(self, speed):
-        speed *= -1
         self.motor.on(speed, block=False)
         self.motor.wait_until_not_moving(300)
 
