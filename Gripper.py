@@ -12,6 +12,7 @@ class Gripper:
     def lowerMotor(self, speed):
         self.motor.on(speed, block=False)
         self.motor.wait_until_not_moving(300)
+        self.motor.stop()
 
     def moveMotor(self, speed, degrees):
         self.motor.on_for_degrees(speed, degrees)
