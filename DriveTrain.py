@@ -98,6 +98,22 @@ class DriveTrain:
         self.tank_drive.on_for_rotations(-speed, speed, (self.getMotorRotations()[0] - cl)/2)
         return cl*2*self.rc.WHEEL_DIAMETER
                     
+    def turnToLine(self, speed, lineColor):
+        self.tank_drive.on(SpeedPercent(speed), -1*SpeedPercent(speed))
+        if(speed > 0):
+            while self.driveColorRight.color_name not in lineColor:
+                pass
+            self.tank_drive.stop()
+            print("Stopped with positive number")
+        else:
+            while self.driveColorLeft.color_name not in lineColor:
+                pass
+            self.tank_drive.stop()
+            print("Stopped with negative number")
+
+        
+        
+        
                     
                         
             
