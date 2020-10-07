@@ -12,6 +12,13 @@ class RobotContainer:
     COLOR_RECOGNITION2 = INPUT_2
     WHEEL_DIAMETER = 5.5
     WHEEL_DISTANCE = 10.8
+    SPEED = 30
+    AGGRESSION = 1.55
+    TURN_SPEED = 20
+    LINE = ["Black", "Brown"]
+    BLUELINE = ["Blue", "Green"]
+    REDLINE = ["Red", "Yellow"]
+
     def __init__(self):
         pass
 

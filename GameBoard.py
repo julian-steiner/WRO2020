@@ -1,5 +1,7 @@
+from DriveTrain import DriveTrain
+import RobotContainer as rc
 class Gameboard:
-    def __init__(self):
+    def __init__(self, driveTrain):
         self.house_c = ""
         self.bricks_c = ""
         self.humans_c = ""
@@ -9,6 +11,8 @@ class Gameboard:
         self.bricks = [0, 0, 0, 0]
         self.humans = [0, 0, 0, 0]
         self.stage = 0
+        self.driveTrain = driveTrain
+        self.rc = rc.RobotContainer()
     
     def update(self):
         #Autofill nones
@@ -96,8 +100,3 @@ class Gameboard:
         if color != "None":
             self.sand_c = color
         self.update()
-
-
-
-
-    
