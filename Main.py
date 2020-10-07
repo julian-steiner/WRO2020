@@ -3,26 +3,34 @@ from DriveTrain import DriveTrain
 from ev3dev2.sound import Sound
 from Gripper import Gripper
 from Gripper2 import Gripper2
+from GameBoard import Gameboard
 import time
 
 driveTrain = DriveTrain()
 gripper = Gripper()
+board = Gameboard()
 
 line = ["Black", "Brown"]
 blueLine = ["Green", "Blue"]
 speed = 30
-aggression = 1.7
+aggression = 1.55
+
+    
 
 driveTrain.driveForward(speed, 27)
 driveTrain.turnAngle(20, 90)
 driveTrain.followToLine(speed, aggression, blueLine, line)
 # driveTrain.driveForward(speed, 15)
-driveTrain.followLine(speed, aggression, line, 15)
+driveTrain.followLine(speed, aggression, blueLine, 15)
 color = gripper.RomerColor()[0]
+board.setHouse(0, color)
 print(color)
 if(color != "None"):
         driveTrain.driveForward(-100, 7)
-        driveTrain.driveForward(100, 7)
+        driveTrain.driveForward(100, 5)
+        driveTrain.driveForward(speed, 2)
+        driveTrain.turnAngle(20, 180)
+        driveTrain.followToLine(speed, aggression, blueLine, line)    
 else:
         driveTrain.driveForward(-20, 4)
         # driveTrain.turnAngle(-20,90)
@@ -35,9 +43,17 @@ else:
         color = gripper.RomerColor()[0]
         print(gripper.RomerColor()[0])
         print(color)
-        gripper.moveMotor(20, 120)
-        time.sleep(3)
+        board.setSand(0, color)
+        gripper.moveMotor(20, 130)
+        time.sleep(1)
+        driveTrain.driveForward(20, -12)
 
+print("----Houses----")
+print(board.houses)
+print("----Sand----")
+print(board.sand)
+print("----Bricks----")
+print(board.bricks)
 # while True:
 #     input("")
 #     print(gripper.color1.rgb)

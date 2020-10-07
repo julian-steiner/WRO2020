@@ -43,24 +43,28 @@ class DriveTrain:
             if dist <= 0:
                 dist *= -1
             while rotations > dist:
+                print(dist * (self.rc.WHEEL_DIAMETER * 3.14159))
                 motor1 = self.driveLeft.rotations
                 motor2 = self.driveRight.rotations
                 dist = (motor1 + motor2) / 2
                 if dist <= 0:
                     dist *= -1
                 lineDrive()
+            self.tank_drive.stop()
 
     def followToLine(self, speed, aggression, LineColor, StopColor):
         states = self.getSensorStates(StopColor)
         while states[0]!= 1 or states[1] != 1:
             states = self.getSensorStates(StopColor)
             self.followLine(speed, aggression, LineColor, 0)
+        self.tank_drive.stop()
 
     def driveToLine(self, speed,  StopColor):
         states = self.getSensorStates(StopColor)
         while states[0]!= 1 or states[1] != 1:
             states = self.getSensorStates(StopColor)
             self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
+        self.tank_drive.stop()
 
     def driveForward(self, speed, distance):
         rotations = distance / (self.rc.WHEEL_DIAMETER * 3.14159)
