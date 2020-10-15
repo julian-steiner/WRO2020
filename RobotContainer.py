@@ -11,9 +11,9 @@ class RobotContainer:
     COLOR_RECOGNITION = INPUT_1
     COLOR_RECOGNITION2 = INPUT_2
     WHEEL_DIAMETER = 5.5
-    WHEEL_DISTANCE = 10.8
-    SPEED = 30
-    AGGRESSION = 1.55
+    WHEEL_DISTANCE = 11.6
+    SPEED = 40
+    AGGRESSION = 10
     TURN_SPEED = 20
     LINE = ["Black", "Brown"]
     BLUELINE = ["Blue", "Green"]

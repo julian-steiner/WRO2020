@@ -18,7 +18,8 @@ aggression = 1.55
 
 battery = power.PowerSupply()
 print(battery.measured_volts)
-driveTrain.driveCheckpoints(0, 1, 0, 90)
+driveTrain.driveCheckpoints(3,0, 180, 0)
+print(gripper.RomerColor()[0])
 
     
 
