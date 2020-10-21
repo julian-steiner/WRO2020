@@ -18,8 +18,14 @@ aggression = 1.55
 
 battery = power.PowerSupply()
 print(battery.measured_volts)
-driveTrain.driveCheckpoints(0, 3, 180, 0)
-print(gripper.RomerColor()[0])
+driveTrain.driveCheckpoints(3, 1, 0, 0)
+board.setHouse(1, gripper.RomerColor()[0])
+driveTrain.driveCheckpoints(1, 0, 0, 0)
+board.setHouse(0, gripper.RomerColor()[0])
+driveTrain.driveCheckpoints(0, 3, 0, 0)
+board.setHouse(3, gripper.RomerColor()[0])
+
+print(board.houses)
 
     
 
