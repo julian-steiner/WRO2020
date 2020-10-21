@@ -1,5 +1,6 @@
 from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.motor import LargeMotor, SpeedPercent, MoveTank
+from Motors import Motors
 import ev3dev2.power
 import RobotContainer
 
@@ -7,17 +8,20 @@ class DriveTrain:
     def __init__(self):
     
         self.rc = RobotContainer.RobotContainer()
-        self.driveColorLeft = ColorSensor(self.rc.DRIVE_COLOR_LEFT)
-        self.driveColorRight = ColorSensor(self.rc.DRIVE_COLOR_RIGHT)
-        self.driveLeft = LargeMotor(self.rc.DRIVE_LEFT)
-        self.driveRight = LargeMotor(self.rc.DRIVE_RIGHT)
-        self.tank_drive = MoveTank(self.rc.DRIVE_LEFT, self.rc.DRIVE_RIGHT)
+        # self.driveColorLeft = ColorSensor(self.rc.DRIVE_COLOR_LEFT)
+        # self.driveColorRight = ColorSensor(self.rc.DRIVE_COLOR_RIGHT)
+        # self.driveLeft = LargeMotor(self.rc.DRIVE_LEFT)
+        # self.driveRight = LargeMotor(self.rc.DRIVE_RIGHT)
+        # self.tank_drive = MoveTank(self.rc.DRIVE_LEFT, self.rc.DRIVE_RIGHT)
+        self.tank_drive = MoveTank(Motors.DriveTrain.leftPort, Motors.DriveTrain.rightPort)
         self.tank_drive.set_polarity("inversed")
     
     def followLine(self, speed, aggression, LineColor, distance):
         def lineDrive():
-            leftColor = self.driveColorLeft.color_name
-            rightColor = self.driveColorRight.color_name
+            # leftColor = self.driveColorLeft.color_name
+            # rightColor = self.driveColorRight.color_name
+            leftColor = Motors.DriveTrain.driveColorLeft.color_name
+            rightColor = Motors.DriveTrain.driveColorRight.color_name
 
             if leftColor in LineColor:
                 if rightColor in LineColor:
@@ -34,19 +38,19 @@ class DriveTrain:
             lineDrive()
 
         else:
-            self.driveLeft.reset()
-            self.driveRight.reset()
+            Motors.DriveTrain.driveLeft.reset()
+            Motors.DriveTrain.driveRight.reset()
             self.tank_drive.set_polarity("inversed")
-            motor1 = self.driveLeft.rotations
-            motor2 = self.driveRight.rotations
+            motor1 = Motors.DriveTrain.driveLeft.rotations
+            motor2 = Motors.DriveTrain.driveRight.rotations
             dist = (motor1 + motor2) / 2
             rotations = distance / (self.rc.WHEEL_DIAMETER * 3.14159)
             if dist <= 0:
                 dist *= -1
             while rotations > dist:
                 print(dist * (self.rc.WHEEL_DIAMETER * 3.14159))
-                motor1 = self.driveLeft.rotations
-                motor2 = self.driveRight.rotations
+                motor1 = Motors.DriveTrain.driveLeft.rotations
+                motor2 = Motors.DriveTrain.driveRight.rotations
                 dist = (motor1 + motor2) / 2
                 if dist <= 0:
                     dist *= -1
@@ -78,7 +82,7 @@ class DriveTrain:
 
     def getSensorStates(self, colors):
         values = [0, 0]
-        sensor_values = [self.driveColorLeft.color_name, self.driveColorRight.color_name]
+        sensor_values = [Motors.DriveTrain.driveColorLeft.color_name, Motors.DriveTrain.driveColorRight.color_name]
         for i in range(len(sensor_values)):
             if sensor_values[i] in colors:
                 values[i] = 1
@@ -89,14 +93,14 @@ class DriveTrain:
         self.tank_drive.set_polarity("inversed")
         self.tank_drive.on(speed, -speed)
         print("Started")
-        while self.driveColorRight.color_name not in ['Black', 'Brown']:
+        while Motors.DriveTrain.driveColorRight.color_name not in ['Black', 'Brown']:
             pass
 
-        while self.driveColorLeft.color_name not in ['Black', 'Brown']:
+        while Motors.DriveTrain.driveColorLeft.color_name not in ['Black', 'Brown']:
             pass
 
         cl = self.getMotorRotations()[0]
-        while self.driveColorRight.color_name not in ['Black', 'Brown']:
+        while Motors.DriveTrain.driveColorRight.color_name not in ['Black', 'Brown']:
             pass
 
         cl += ((self.getMotorRotations()[0] - cl)/2)
@@ -108,12 +112,12 @@ class DriveTrain:
         speed *= -1
         self.tank_drive.on(SpeedPercent(speed), -1*SpeedPercent(speed))
         if(speed > 0):
-            while self.driveColorRight.color_name not in lineColor:
+            while Motors.DriveTrain.driveColorRight.color_name not in lineColor:
                 pass
             self.tank_drive.stop()
             print("Stopped with positive number")
         else:
-            while self.driveColorLeft.color_name not in lineColor:
+            while Motors.DriveTrain.driveColorLeft.color_name not in lineColor:
                 pass
             self.tank_drive.stop()
             print("Stopped with negative number")       
