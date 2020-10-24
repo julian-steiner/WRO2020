@@ -6,20 +6,13 @@ from Motors import Motors
 class Gripper:
     def __init__(self):
         self.rc = rc.RobotContainer()
-        # self.motor = MediumMotor(self.rc.GRIPPER)
-        # self.color1 = ColorSensor(self.rc.COLOR_RECOGNITION)
-        # self.color2 = ColorSensor(self.rc.COLOR_RECOGNITION2)
     
     def lowerMotor(self, speed):
-        # self.motor.on(speed, block=False)
         Motors.Gripper1.gripperMotor.on(speed, block=False)
-        # self.motor.wait_until_not_moving(300)
         Motors.Gripper1.gripperMotor.wait_until_not_moving(300)
-        # self.motor.stop()
         Motors.Gripper1.gripperMotor.stop()
 
     def moveMotor(self, speed, degrees):
-        # self.motor.on_for_degrees(speed, degrees)
         Motors.Gripper1.gripperMotor.on_for_degrees(speed, degrees)
 
     def getColors(self):
@@ -30,8 +23,6 @@ class Gripper:
             else:
                 return "Green"
             return "No color"
-        # values.append(getColor(self.color1.rgb))
-        # values.append(getColor(self.color2.rgb))
         values.append(getColor(Motors.Gripper1.colorSensor.rgb))
         values.append(getColor(Motors.Gripper2.colorSensor.rgb))
         return values
@@ -46,8 +37,6 @@ class Gripper:
                 return "None"
 
         for i in range(10):
-            # c1 = self.color1.rgb
-            # c2 = self.color2.rgb
             c1 = Motors.Gripper1.colorSensor.rgb
             c2 = Motors.Gripper2.colorSensor.rgb
             c = [[11, 35, 90], [8, 60, 20], [6, 3, 5]]
