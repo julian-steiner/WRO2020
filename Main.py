@@ -4,28 +4,50 @@ from ev3dev2.sound import Sound
 from Gripper import Gripper
 from Gripper2 import Gripper2
 from GameBoard import Gameboard
+from SandBagHandling import BagHandler
+from Motors import Motors
 import time
 from ev3dev2 import power
 
 driveTrain = DriveTrain()
 gripper = Gripper()
 board = Gameboard(driveTrain)
+bagHandler = BagHandler(driveTrain, gripper)
+board.setHouse(0, "Green")
+motors = Motors()
 
-line = ["Black", "Brown"]
-blueLine = ["Green", "Blue"]
-speed = 30
-aggression = 1.55
+bagHandler.pickUp(2, 0, board.houses)
+# driveTrain.followToLine(30, 10, ["Yellow", "Red"], ["Black"])
+# while True:
+#     left, right = Motors.DriveTrain.driveColorLeft.rgb, Motors.DriveTrain.driveColorRight.rgb
+#     white = [[255, 223, 200]]
+#     yellow = [[250, 170, 113], [250, 200, 139]]
+#     red = [[240, 85, 85], [250, 160, 130]]
+#     black = [[180, 170, 170], [190, 170, 130]]
+#     green = [[150, 160, 130], [200, 190, 140]]
+#     blue = [[120, 120, 120], [230, 206, 219]]
+    # print(left, right, driveTrain.RomerColor([black, white], ["Black", "White"]))
+    # print(left, right, driveTrain.RomerColor([red, yellow, white], ["Red", "Yellow", "White"]))
 
-battery = power.PowerSupply()
-print(battery.measured_volts)
-driveTrain.driveCheckpoints(3, 1, 0, 0)
-board.setHouse(1, gripper.RomerColor()[0])
-driveTrain.driveCheckpoints(1, 0, 0, 0)
-board.setHouse(0, gripper.RomerColor()[0])
-driveTrain.driveCheckpoints(0, 3, 0, 0)
-board.setHouse(3, gripper.RomerColor()[0])
+# while True:
+#     rgb = motors.Gripper1.colorSensor.rgb
+#     print(gripper.RomerColor([13, 12, 20] ,[15, 12, 29], [0, 0, 1], "Green", "Blue", "None") + " " + str(rgb))
 
-print(board.houses)
+# line = ["Black", "Brown"]
+# blueLine = ["Green", "Blue"]
+# speed = 30
+# aggression = 1.55
+
+# battery = power.PowerSupply()
+# print(battery.measured_volts)
+# driveTrain.driveCheckpoints(3, 1, 0, 0)
+# board.setHouse(1, gripper.RomerColor()[0])
+# driveTrain.driveCheckpoints(1, 0, 0, 0)
+# board.setHouse(0, gripper.RomerColor()[0])
+# driveTrain.driveCheckpoints(0, 3, 0, 0)
+# board.setHouse(3, gripper.RomerColor()[0])
+
+# print(board.houses)
 
     
 

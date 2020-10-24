@@ -7,6 +7,7 @@ class RobotContainer:
     SPEED = 50
     SLOW_SPEED = 30
     AGGRESSION = 10
+    APPROACH_SPEED = 20
     TURN_SPEED = 20
     LINE = ["Black", "Brown"]
     BLUELINE = ["Blue", "Green"]
