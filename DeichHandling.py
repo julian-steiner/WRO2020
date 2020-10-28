@@ -48,19 +48,35 @@ class DeichHandler:
             self.Gripper2.movemotor(50,False)
             self.time.sleep(1)
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,8)
-            # self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,35)
-            # self.time.sleep(0.1)
-            # self.DriveTrain.turnAngle(self.rc.SPEED,90*(-1)**(chekpoint + 1))
-            # self.time.sleep(0.1)
-            # self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,24)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(chekpoint + 1),"Black")
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,24)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED,"Black")
-        Gripper1PickUp()
+        self.Gripper.PickUp()
+        if color[0] != color[1]:
+            self.DriveTrain.turnToLine(self.rc.TURN_SPEED,"Black")
+            self.DriveTrain.turnToLine(self.rc.TURN_SPEED,"Black")
+            if chekpoint % 2 == 1:
+                chekpoint -= 1
+            if chekpoint % 2 == 1:
+                chekpoint += 1
+        else:
+            self.DriveTrain.turnToLine((-1)**(chekpoint + 1)*self.rc.TURN_SPEED,"Black")
+            self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,57)
+            self.DriveTrain.turnToLine((-1)**(chekpoint + 1)*self.rc.TURN_SPEED,"Black")
+            self.DeichPutDown()
+        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,24)
         männli.append(color[0])
-        return color
+        return chekpoint
     
     def DeichPutDown(self):
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-13)
         self.Gripper2.movemotor(50,False)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,13)
+
+#gripper2.movemotor(50,True)
+
+#while True:
+#     print(gripper2.RomerColorPD())
+#    print(motors.Gripper2.colorSensor.rgb)
+
+print(deichhandler.männlidriver(0,[]))
