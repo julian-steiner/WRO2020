@@ -5,9 +5,6 @@ from RobotContainer import RobotContainer
 from DriveTrain import DriveTrain
 from time import sleep
 
-def Gripper1PickUp(startpoint,ofset,housecolor):
-    return False
-
 class DeichHandler:
     def __init__(self,Gripper,Gripper2,DriveTrain,time):
         self.Gripper = Gripper
@@ -22,9 +19,10 @@ class DeichHandler:
         self.Gripper2.movemotor(50,True)
         self.time.sleep(1)
         color = self.Gripper2.RomerColorPU()
-        print(color, männli)
         if color[0] not in männli:
             self.Gripper2.movemotor(50,False)
+        else:
+            RobotContainer.setLoaded(0,color)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,14)
         self.DriveTrain.turnToLine((-1)**chekpoint*(self.rc.TURN_SPEED),"Black")
         return color
@@ -47,6 +45,8 @@ class DeichHandler:
         if color[0] != color[1]:
             self.Gripper2.movemotor(50,False)
             self.time.sleep(1)
+        else:
+            RobotContainer.setLoaded(0,True)
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,8)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(chekpoint + 1),"Black")
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,24)
@@ -71,6 +71,7 @@ class DeichHandler:
     def DeichPutDown(self):
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-13)
         self.Gripper2.movemotor(50,False)
+        RobotContainer.setLoaded(0,"None")
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,13)
 
 #gripper2.movemotor(50,True)
@@ -79,4 +80,4 @@ class DeichHandler:
 #     print(gripper2.RomerColorPD())
 #    print(motors.Gripper2.colorSensor.rgb)
 
-print(deichhandler.männlidriver(0,[]))
+#print(deichhandler.männlidriver(0,[]))
