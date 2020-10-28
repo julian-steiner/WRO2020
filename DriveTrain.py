@@ -9,11 +9,6 @@ class DriveTrain:
     def __init__(self):
     
         self.rc = RobotContainer.RobotContainer()
-        # self.driveColorLeft = ColorSensor(self.rc.DRIVE_COLOR_LEFT)
-        # self.driveColorRight = ColorSensor(self.rc.DRIVE_COLOR_RIGHT)
-        # self.driveLeft = LargeMotor(self.rc.DRIVE_LEFT)
-        # self.driveRight = LargeMotor(self.rc.DRIVE_RIGHT)
-        # self.tank_drive = MoveTank(self.rc.DRIVE_LEFT, self.rc.DRIVE_RIGHT)
         self.tank_drive = MoveTank(Motors.DriveTrain.leftPort, Motors.DriveTrain.rightPort)
         self.tank_drive.set_polarity("inversed")
     
@@ -44,12 +39,12 @@ class DriveTrain:
             #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
 
             if leftColor not in LineColor:
-                if rightColor not in LineColor:
+                if rightColor in ["White", "Black"]:
                     self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
                 else:
                     self.tank_drive.on(SpeedPercent(speed + aggression), SpeedPercent(speed))
             else:
-                if rightColor not in LineColor:
+                if rightColor in ["White", "Black"]:
                     self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed + aggression))
                 else:
                     self.tank_drive.off()

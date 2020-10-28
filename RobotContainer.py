@@ -13,7 +13,6 @@ class RobotContainer:
     AGGRESSION = 6
     LOW_AGGRESSION = 4
     APPROACH_SPEED = 20
-    # TURN_SPEED = 20
     TURN_SPEED = 20
     SLOW_TURN_SPEED = 10
     LINE = ["Black"]

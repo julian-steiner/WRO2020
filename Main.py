@@ -12,6 +12,7 @@ from ev3dev2 import power
 
 driveTrain = DriveTrain()
 gripper = Gripper()
+gripper2 = Gripper2()
 board = Gameboard(driveTrain)
 bagHandler = BagHandler(driveTrain, gripper)
 board.setHouse(3, "Green")
@@ -95,3 +96,11 @@ bagHandler.deliver(2, 0, board.houses)
 #     input("")
 #     print(gripper.color1.rgb)
 #     print(gripper.RomerColor()[0])
+
+#gripper2.movemotor(50,True)
+
+#while True:
+#     print(gripper2.RomerColorPD())
+#    print(motors.Gripper2.colorSensor.rgb)
+
+print(deichhandler.männlidriver(0,[]))
