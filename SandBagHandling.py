@@ -29,7 +29,7 @@ class BagHandler:
             self.DriveTrain.center("Black")
             self.Gripper.lowerMotor(-40)
             self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 15)
-            RobotContainer.setLoaded(True, color, 0)
+            RobotContainer.setLoaded(color, 0)
             self.Gripper.moveMotor(10, 160)
             self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 1)
         
