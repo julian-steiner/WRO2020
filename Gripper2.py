@@ -7,9 +7,6 @@ import time
 class Gripper2:
     def __init__(self):
         self.rc = rc.RobotContainer()
-        # self.motor = MediumMotor(self.rc.GRIPPER_2)
-        # self.color1 = ColorSensor(self.rc.COLOR_RECOGNITION)
-        # self.color2 = ColorSensor(self.rc.COLOR_RECOGNITION2)
     
     def movemotor(self,speed,direction):
         if direction == True:
@@ -17,11 +14,48 @@ class Gripper2:
         else:
             direction=1
         speed*=direction
-        # self.motor.on(SpeedPercent(speed))
         Motors.Gripper2.gripperMotor.on(SpeedPercent(speed))
-    
-    def EvacuateOrder(self,speed):
-        # self.motor.on_for_degrees(SpeedPercent(speed),-140)
-        Motors.Gripper2.gripperMotor.on(SpeedPercent(speed), -140)
-        time.sleep(0.5)
-        Motors.Gripper2.gripperMotor.on_for_degrees(SpeedPercent(speed),140)
+
+    def RomerColorPU(self):
+        def convertColor(num):
+            if num == 0:
+                return "Red"
+            elif num == 1:
+                return "Yellow"
+            elif num == 2:
+                return "None"
+
+        for i in range(10):
+            c2 = Motors.Gripper2.colorSensor.rgb
+            c = [[83, 3.5, 5.5], [68, 21, 5], [23, 16, 25]]
+            diff2 = []
+            for i in range(len(c)):
+                v2 = 0
+                for j in range(3):
+                    v2 += (c[i][j] - c2[j])**2
+                diff2.append(v2)
+            indeces = []
+            indeces.append(convertColor(diff2.index(min(diff2))))
+            return indeces
+
+    def RomerColorPD(self):
+        def convertColor(num):
+            if num == 0:
+                return "Red"
+            elif num == 1:
+                return "Yellow"
+            elif num == 2:
+                return "None"
+
+        for i in range(10):
+            c2 = Motors.Gripper2.colorSensor.rgb
+            c = [[125, 24, 14], [122, 74, 18], [11, 8, 8]]
+            diff2 = []
+            for i in range(len(c)):
+                v2 = 0
+                for j in range(3):
+                    v2 += (c[i][j] - c2[j])**2
+                diff2.append(v2)
+            indeces = []
+            indeces.append(convertColor(diff2.index(min(diff2))))
+            return indeces
