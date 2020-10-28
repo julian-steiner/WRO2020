@@ -1,6 +1,7 @@
 from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.motor import LargeMotor, SpeedPercent, MoveTank
 from Motors import Motors
+import time
 import ev3dev2.power
 import RobotContainer
 
@@ -18,21 +19,40 @@ class DriveTrain:
     
     def followLine(self, speed, aggression, LineColor, distance):
         def lineDrive():
+            if "Black" in LineColor:
+                threshold = 70
+                leftReflected = Motors.DriveTrain.driveColorLeft.reflected_light_intensity
+                if(leftReflected < threshold):
+                    self.tank_drive.on(speed, speed + self.rc.LOW_AGGRESSION)
+                else:
+                    self.tank_drive.on(speed + self.rc.LOW_AGGRESSION, speed)
+                        
             # leftColor = self.driveColorLeft.color_name
             # rightColor = self.driveColorRight.color_name
             leftColor = Motors.DriveTrain.driveColorLeft.color_name
             rightColor = Motors.DriveTrain.driveColorRight.color_name
 
-            if leftColor in LineColor:
-                if rightColor in LineColor:
-                    self.tank_drive.off()
-                else:
-                    self.tank_drive.on(SpeedPercent(speed - aggression), SpeedPercent(speed))
-            else:
-                if rightColor in LineColor:
-                    self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed - aggression))
-                else:
+            # if leftColor in LineColor:
+            #     if rightColor in LineColor:
+            #         self.tank_drive.off()
+            #     else:
+            #         self.tank_drive.on(SpeedPercent(speed - aggression), SpeedPercent(speed))
+            # else:
+            #     if rightColor in LineColor:
+            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed - aggression))
+            #     else:
+            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
+
+            if leftColor not in LineColor:
+                if rightColor not in LineColor:
                     self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
+                else:
+                    self.tank_drive.on(SpeedPercent(speed + aggression), SpeedPercent(speed))
+            else:
+                if rightColor not in LineColor:
+                    self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed + aggression))
+                else:
+                    self.tank_drive.off()
         
         if distance == 0:
             lineDrive()
@@ -76,9 +96,27 @@ class DriveTrain:
         self.tank_drive.on_for_rotations(SpeedPercent(speed), SpeedPercent(speed), rotations)
     
     def turnAngle(self, speed, angle):
+        self.tank_drive.off()
+        time.sleep(0.1)
         angle *= -1
+        print(str(angle) + " Angle before")
+        angle = self.optimizeAngle(angle)
+        print(str(angle) + " Angle after return")
+        if(RobotContainer.RobotContainer.getLoaded()[0]):
+            speed = self.rc.SLOW_TURN_SPEED
         rotations = (angle * self.rc.WHEEL_DISTANCE) / (360 * self.rc.WHEEL_DIAMETER)
         self.tank_drive.on_for_rotations(SpeedPercent(speed), SpeedPercent(-speed), rotations)
+
+    def center(self, color):
+        speed = 5
+        while Motors.DriveTrain.driveColorLeft.color_name != color:
+            print(Motors.DriveTrain.driveColorLeft.color_name)
+            self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
+        while Motors.DriveTrain.driveColorRight.color_name != color:
+            print(Motors.DriveTrain.driveColorRight.color_name)
+            self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
+        self.turnAngle(5,  -9)
+        self.tank_drive.off()
 
     def getSensorStates(self, colors):
         values = [0, 0]
@@ -127,103 +165,108 @@ class DriveTrain:
             return angle + 360
         elif 180 < angle:
             return angle - 360
+        if(RobotContainer.RobotContainer.getLoaded()[0]):
+            print("Added the loaded FActor")
+            angle *= self.rc.LOADED_FACTOR
+        print(angle)
         return angle  
 
     def driveCheckpoints(self, point1, point2, s_offset, e_offset): 
-        end_distance = 14       
+        end_distance = 12
+        long_distance = 128
         if point1 == 0:
             if point2 == 1:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
             elif point2 == 2:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 25)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, -90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED,e_offset)
             elif point2 == 3:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 25)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, 90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
         elif point1 == 1:
             if point2 == 0:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED,e_offset)
             elif point2 == 2:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 25)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(-90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, -90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
             elif point2 == 3:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 25)
                 self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(-90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, 90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
         if point1 == 2:
             if point2 == 3:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED,e_offset)
             elif point2 == 0:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, -90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
             elif point2 == 1:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, 90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
-                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
         if point1 == 3:
             if point2 == 2:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
             elif point2 == 0:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(-90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, -90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
             elif point2 == 1:
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(180 - s_offset))
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(-90))
-                self.driveForward(self.rc.SPEED, 130)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, long_distance)
                 self.turnAngle(self.rc.TURN_SPEED, 90)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
-                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(e_offset))
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)

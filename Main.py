@@ -5,6 +5,7 @@ from Gripper import Gripper
 from Gripper2 import Gripper2
 from GameBoard import Gameboard
 from SandBagHandling import BagHandler
+from RobotContainer import RobotContainer
 from Motors import Motors
 import time
 from ev3dev2 import power
@@ -13,10 +14,11 @@ driveTrain = DriveTrain()
 gripper = Gripper()
 board = Gameboard(driveTrain)
 bagHandler = BagHandler(driveTrain, gripper)
-board.setHouse(0, "Green")
+board.setHouse(3, "Green")
 motors = Motors()
-
-bagHandler.pickUp(2, 0, board.houses)
+RobotContainer.setLoaded(True, "Green", 0)
+# bagHandler.pickUp(2, 0, board.houses)
+bagHandler.deliver(2, 0, board.houses)
 # driveTrain.followToLine(30, 10, ["Yellow", "Red"], ["Black"])
 # while True:
 #     left, right = Motors.DriveTrain.driveColorLeft.rgb, Motors.DriveTrain.driveColorRight.rgb
