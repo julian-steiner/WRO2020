@@ -100,14 +100,22 @@ class DriveTrain:
         rotations = (angle * self.rc.WHEEL_DISTANCE) / (360 * self.rc.WHEEL_DIAMETER)
         self.tank_drive.on_for_rotations(SpeedPercent(speed), SpeedPercent(-speed), rotations)
 
-    def center(self, color):
+    def center(self, color, direction = '1'):
         speed = 5
-        while Motors.DriveTrain.driveColorLeft.color_name != color:
-            self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
-        while Motors.DriveTrain.driveColorRight.color_name != color:
-            self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
-        self.turnAngle(5,  -9)
-        self.tank_drive.off()
+        if(direction == '1'):
+            while Motors.DriveTrain.driveColorLeft.color_name != color:
+                self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
+            while Motors.DriveTrain.driveColorRight.color_name != color:
+                self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
+            self.turnAngle(5,  -9)
+            self.tank_drive.off()
+        else:
+            while Motors.DriveTrain.driveColorRight.color_name != color:
+                self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
+            while Motors.DriveTrain.driveColorLeft.color_name != color:
+                self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
+            self.turnAngle(5,  9)
+            self.tank_drive.off()
 
     def getSensorStates(self, colors):
         values = [0, 0]

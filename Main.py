@@ -17,13 +17,12 @@ gripper = Gripper()
 gripper2 = Gripper2()
 board = Gameboard(driveTrain)
 bagHandler = BagHandler(driveTrain, gripper)
+deichHandler = DeichHandler(gripper, gripper2, driveTrain, time, bagHandler)
 board.setHouse(3, "Green")
 motors = Motors()
 
-print("Loaded " + str(RobotContainer.getLoaded()[0]))
-bagHandler.pickUp(2, 0, board.houses)
 
-
+deichHandler.männlidriver(3, board.humans, board.houses)
 
 # print("Loaded " + str(RobotContainer.getLoaded()[0]))
 # bagHandler.pickUp(2, 0, board.houses)
@@ -120,4 +119,3 @@ bagHandler.pickUp(2, 0, board.houses)
 #     print(gripper2.RomerColorPD())
 #    print(motors.Gripper2.colorSensor.rgb)
 
-print(deichhandler.männlidriver(0,[]))
