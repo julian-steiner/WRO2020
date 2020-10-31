@@ -5,6 +5,7 @@ from Gripper import Gripper
 from Gripper2 import Gripper2
 from GameBoard import Gameboard
 from SandBagHandling import BagHandler
+from EvacuateOrderHandling import OrderHandling
 from RobotContainer import RobotContainer
 from Motors import Motors
 import time
@@ -15,11 +16,16 @@ gripper = Gripper()
 gripper2 = Gripper2()
 board = Gameboard(driveTrain)
 bagHandler = BagHandler(driveTrain, gripper)
+orderHandler = OrderHandling(driveTrain, gripper)
 board.setHouse(3, "Green")
 motors = Motors()
 
-driveTrain.driveCheckpoints(2, 1, 0, 180)
-driveTrain.driveCheckpoints(1, 6, 180, 0)
+driveTrain.driveCheckpoints(2, 3, 0, 0)
+orderHandler.deliverOrder()
+driveTrain.driveCheckpoints(3, 0, 0, 0)
+orderHandler.deliverOrder()
+
+
 
 # print("Loaded " + str(RobotContainer.getLoaded()[0]))
 # bagHandler.pickUp(2, 0, board.houses)
