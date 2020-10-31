@@ -16,9 +16,19 @@ board = Gameboard(driveTrain)
 bagHandler = BagHandler(driveTrain, gripper)
 board.setHouse(3, "Green")
 motors = Motors()
-RobotContainer.setLoaded(True, "Green", 0)
-# bagHandler.pickUp(2, 0, board.houses)
-bagHandler.deliver(2, 0, board.houses)
+
+print("Loaded " + str(RobotContainer.getLoaded()[0]))
+bagHandler.pickUp(2, 0, board.houses)
+
+# RobotContainer.setLoaded("Green", 0)
+# bagHandler.deliver(2, 0, board.houses)
+# RobotContainer.setLoaded(None, None)
+# print(RobotContainer.getLoaded()[0])
+# driveTrain.driveCheckpoints(3, 2, 0, 0)
+
+
+
+
 # driveTrain.followToLine(30, 10, ["Yellow", "Red"], ["Black"])
 # while True:
 #     left, right = Motors.DriveTrain.driveColorLeft.rgb, Motors.DriveTrain.driveColorRight.rgb
