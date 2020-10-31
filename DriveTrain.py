@@ -163,6 +163,9 @@ class DriveTrain:
     def driveCheckpoints(self, point1, point2, s_offset, e_offset, end_distance = '12'): 
         long_distance = 128
         end_distance = float(end_distance)
+        if point1 == point2:
+            self.turnAngle(self.rc.TURN_SPEED, e_offset - s_offset)
+            
         if point1 == 0:
             if point2 == 1:
                 self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
@@ -187,6 +190,12 @@ class DriveTrain:
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
                 self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif point2 == 6:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 27)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, 24)
+
         elif point1 == 1:
             if point2 == 0:
                 self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
@@ -211,6 +220,12 @@ class DriveTrain:
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
                 self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif point2 == 6:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 27)
+                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(-90))
+                self.driveForward(self.rc.SPEED, 24)
+
         if point1 == 2:
             if point2 == 3:
                 self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
@@ -235,6 +250,12 @@ class DriveTrain:
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
                 self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif point2 == 6:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, 100)
+
         if point1 == 3:
             if point2 == 2:
                 self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
@@ -259,3 +280,8 @@ class DriveTrain:
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
                 self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif point2 == 6:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, 100)

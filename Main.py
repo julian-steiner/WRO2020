@@ -5,6 +5,7 @@ from Gripper import Gripper
 from Gripper2 import Gripper2
 from GameBoard import Gameboard
 from SandBagHandling import BagHandler
+from EvacuateOrderHandling import OrderHandling
 from RobotContainer import RobotContainer
 from DeichHandling import DeichHandler
 from Motors import Motors
@@ -16,9 +17,13 @@ gripper = Gripper()
 gripper2 = Gripper2()
 board = Gameboard(driveTrain)
 bagHandler = BagHandler(driveTrain, gripper)
-deichhandler = DeichHandler(gripper,gripper2,driveTrain,time,bagHandler)
 board.setHouse(3, "Green")
 motors = Motors()
+
+print("Loaded " + str(RobotContainer.getLoaded()[0]))
+bagHandler.pickUp(2, 0, board.houses)
+
+
 
 # print("Loaded " + str(RobotContainer.getLoaded()[0]))
 # bagHandler.pickUp(2, 0, board.houses)
@@ -115,4 +120,4 @@ motors = Motors()
 #     print(gripper2.RomerColorPD())
 #    print(motors.Gripper2.colorSensor.rgb)
 
-print(deichhandler.männlidriver(0,[],["Blue"]))
+print(deichhandler.männlidriver(0,[]))
