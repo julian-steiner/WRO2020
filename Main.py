@@ -18,8 +18,11 @@ bagHandler = BagHandler(driveTrain, gripper)
 board.setHouse(3, "Green")
 motors = Motors()
 
-print("Loaded " + str(RobotContainer.getLoaded()[0]))
-bagHandler.pickUp(2, 0, board.houses)
+driveTrain.driveCheckpoints(2, 1, 0, 180)
+driveTrain.driveCheckpoints(1, 6, 180, 0)
+
+# print("Loaded " + str(RobotContainer.getLoaded()[0]))
+# bagHandler.pickUp(2, 0, board.houses)
 
 # RobotContainer.setLoaded("Green", 0)
 # bagHandler.deliver(2, 0, board.houses)
@@ -113,4 +116,3 @@ bagHandler.pickUp(2, 0, board.houses)
 #     print(gripper2.RomerColorPD())
 #    print(motors.Gripper2.colorSensor.rgb)
 
-print(deichhandler.männlidriver(0,[]))
