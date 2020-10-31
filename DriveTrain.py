@@ -27,27 +27,27 @@ class DriveTrain:
             leftColor = Motors.DriveTrain.driveColorLeft.color_name
             rightColor = Motors.DriveTrain.driveColorRight.color_name
 
-            # if leftColor in LineColor:
-            #     if rightColor in LineColor:
-            #         self.tank_drive.off()
-            #     else:
-            #         self.tank_drive.on(SpeedPercent(speed - aggression), SpeedPercent(speed))
-            # else:
-            #     if rightColor in LineColor:
-            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed - aggression))
-            #     else:
-            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
-
-            if leftColor not in LineColor:
-                if rightColor in ["White", "Black"]:
-                    self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
-                else:
-                    self.tank_drive.on(SpeedPercent(speed + aggression), SpeedPercent(speed))
-            else:
-                if rightColor in ["White", "Black"]:
-                    self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed + aggression))
-                else:
+            if leftColor in LineColor:
+                if rightColor in LineColor:
                     self.tank_drive.off()
+                else:
+                    self.tank_drive.on(SpeedPercent(speed - aggression), SpeedPercent(speed))
+            else:
+                if rightColor in LineColor:
+                    self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed - aggression))
+                else:
+                    self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
+
+            # if leftColor not in LineColor:
+            #     if rightColor not in LineColor:
+            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
+            #     else:
+            #         self.tank_drive.on(SpeedPercent(speed + aggression), SpeedPercent(speed))
+            # else:
+            #     if rightColor not in LineColor:
+            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed + aggression))
+            #     else:
+            #         self.tank_drive.off()
         
         if distance == 0:
             lineDrive()
@@ -94,9 +94,7 @@ class DriveTrain:
         self.tank_drive.off()
         time.sleep(0.1)
         angle *= -1
-        print(str(angle) + " Angle before")
         angle = self.optimizeAngle(angle)
-        print(str(angle) + " Angle after return")
         if(RobotContainer.RobotContainer.getLoaded()[0]):
             speed = self.rc.SLOW_TURN_SPEED
         rotations = (angle * self.rc.WHEEL_DISTANCE) / (360 * self.rc.WHEEL_DIAMETER)
@@ -105,10 +103,8 @@ class DriveTrain:
     def center(self, color):
         speed = 5
         while Motors.DriveTrain.driveColorLeft.color_name != color:
-            print(Motors.DriveTrain.driveColorLeft.color_name)
             self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
         while Motors.DriveTrain.driveColorRight.color_name != color:
-            print(Motors.DriveTrain.driveColorRight.color_name)
             self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
         self.turnAngle(5,  -9)
         self.tank_drive.off()
@@ -161,14 +157,12 @@ class DriveTrain:
         elif 180 < angle:
             return angle - 360
         if(RobotContainer.RobotContainer.getLoaded()[0]):
-            print("Added the loaded FActor")
             angle *= self.rc.LOADED_FACTOR
-        print(angle)
         return angle  
-
-    def driveCheckpoints(self, point1, point2, s_offset, e_offset): 
-        end_distance = 12
+    
+    def driveCheckpoints(self, point1, point2, s_offset, e_offset, end_distance = '12'): 
         long_distance = 128
+        end_distance = float(end_distance)
         if point1 == 0:
             if point2 == 1:
                 self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)

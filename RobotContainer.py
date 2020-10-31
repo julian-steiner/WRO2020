@@ -1,8 +1,8 @@
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D
 from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
 
-LOADED_BAGS = "None"
-LOADED_BLOCKS = "None"
+LOADED_BAGS = None
+LOADED_BLOCKS = None
 
 class RobotContainer:
     WHEEL_DIAMETER = 5.5
@@ -28,6 +28,6 @@ class RobotContainer:
     @staticmethod
     def getLoaded():
         global LOADED_BLOCKS, LOADED_BAGS
-        return LOADED_BAGS != "None" or LOADED_BLOCKS != "None", LOADED_BAGS, LOADED_BLOCKS
+        return LOADED_BAGS != None, LOADED_BAGS, LOADED_BLOCKS
     def __init__(self):
         pass
