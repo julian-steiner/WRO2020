@@ -1,102 +1,122 @@
 from DriveTrain import DriveTrain
 import RobotContainer as rc
 class Gameboard:
-    def __init__(self, driveTrain):
-        self.house_c = ""
-        self.bricks_c = ""
-        self.humans_c = ""
-        self.sand_c = ""
-        self.houses = [0, 0, 0, 0]
-        self.sand = [0, 0, 0, 0]
-        self.bricks = [0, 0, 0, 0]
-        self.humans = [0, 0, 0, 0]
-        self.stage = 0
-        self.driveTrain = driveTrain
-        self.rc = rc.RobotContainer()
+    house_c = ""
+    bricks_c = ""
+    humans_c = ""
+    sand_c = ""
+    houses = [0, 0, 0, 0]
+    sand = [0, 0, 0, 0]
+    bricks = [0, 0, 0, 0]
+    humans = [0, 0, 0, 0]
+    deliveredBlocks = []
+    deliveredBags = []
+    stage = 0
+    rc = rc.RobotContainer()
     
-    def update(self):
+    @staticmethod
+    def update():
         #Autofill nones
-        if(self.houses.count("Green") + self.houses.count("Blue") == 2 and self.houses.count(0) != 0):
-            for i in range(self.houses.count(0)):
-                self.houses[self.houses.index(0)] = "None"
+        if(Gameboard.houses.count("Green") + Gameboard.houses.count("Blue") == 2 and Gameboard.houses.count(0) != 0):
+            for i in range(Gameboard.houses.count(0)):
+                Gameboard.houses[Gameboard.houses.index(0)] = "None"
 
-        if(self.bricks.count("Yellow") + self.bricks.count("Red") == 2 and self.bricks.count(0) != 0):
-            for i in range(self.bricks.count(0)):
-                self.bricks[self.bricks.index(0)] = "None"
+        if(Gameboard.bricks.count("Yellow") + Gameboard.bricks.count("Red") == 2 and Gameboard.bricks.count(0) != 0):
+            for i in range(Gameboard.bricks.count(0)):
+                Gameboard.bricks[Gameboard.bricks.index(0)] = "None"
         
-        if(self.humans.count("Yellow") + self.humans.count("Red") == 2 and self.houses.count(0) != 0):
-            for i in range(self.bricks.count(0)):
-                self.bricks[self.bricks.index(0)] = "None"
+        if(Gameboard.humans.count("Yellow") + Gameboard.humans.count("Red") == 2 and Gameboard.houses.count(0) != 0):
+            for i in range(Gameboard.bricks.count(0)):
+                Gameboard.bricks[Gameboard.bricks.index(0)] = "None"
 
-        if(self.sand.count("Green") + self.sand.count("Blue") == 2 and self.sand.count(0) != 0):
-            for i in range(self.sand.count(0)):
-                self.sand[self.sand.index(0)] = "None"
+        if(Gameboard.sand.count("Green") + Gameboard.sand.count("Blue") == 2 and Gameboard.sand.count(0) != 0):
+            for i in range(Gameboard.sand.count(0)):
+                Gameboard.sand[Gameboard.sand.index(0)] = "None"
 
         #Autofill Nones in Bricks and Houses
-        if(self.bricks.count("Yellow") + self.bricks.count("Red") != 2 and self.bricks.count("None") < 2):
+        if(Gameboard.bricks.count("Yellow") + Gameboard.bricks.count("Red") != 2 and Gameboard.bricks.count("None") < 2):
             for i in range(4):
-                if(self.houses[i] in ["Green", "Blue"]):
-                    self.bricks[i] = "None"
-                    self.sand[i] = "None"
+                if(Gameboard.houses[i] in ["Green", "Blue"]):
+                    Gameboard.bricks[i] = "None"
+                    Gameboard.sand[i] = "None"
         
-        if(self.humans.count("Yellow") + self.humans.count("Red") != 2 and self.humans.count("None") < 2):
+        #Autofill Nones in Humans
+        if(Gameboard.humans.count("Yellow") + Gameboard.humans.count("Red") != 2 and Gameboard.humans.count("None") < 2):
             for i in range(4):
-                if(self.houses[i] in ["None"]):
-                    self.humans[i] = "None"
+                if(Gameboard.houses[i] in ["None"] or Gameboard.bricks[i] in ["Yellow", "Red"]):
+                    Gameboard.humans[i] = "None"
 
         #Autofill colors
-        if(self.houses.count(0) == 1):
+
+        #Autofill houses
+        if(Gameboard.houses.count(0) == 1):
             c = "None"
-            if(self.house_c == "Blue"):
+            if(Gameboard.house_c == "Blue"):
                 c = "Green"
             else:
                 c = "Blue"
-            self.houses[self.houses.index(0)] = c
+            Gameboard.houses[Gameboard.houses.index(0)] = c
         
-        if(self.bricks.count(0) == 1):
+        #Autofill  bricks
+        if(Gameboard.bricks.count(0) == 1):
             c = "None"
-            if(self.bricks_c == "Yellow"):
+            if(Gameboard.bricks_c == "Yellow"):
                 c = "Red"
             else:
                 c = "Yellow"
-            self.bricks[self.bricks.index(0)] = c
+            Gameboard.bricks[Gameboard.bricks.index(0)] = c
         
-        if(self.humans.count(0) == 1):
+        #Autofill humans
+        if(Gameboard.humans.count(0) == 1):
             c = "None"
-            if(self.humans_c == "Yellow"):
+            if(Gameboard.humans_c == "Yellow"):
                 c = "Red"
             else:
                 c = "Yellow"
-            self.bricks[self.humans.index(0)] = c
+            Gameboard.humans[Gameboard.humans.index(0)] = c
         
-        if(self.sand.count(0) == 1):
+        #Autofill sandbags
+        if(Gameboard.sand.count(0) == 1):
             c = "None"
-            if(self.sand_c == "Blue"):
+            if(Gameboard.sand_c == "Blue"):
                 c = "Green"
             else:
                 c = "Blue"
-            self.sand[self.sand.index(0)] = c
+            Gameboard.sand[Gameboard.sand.index(0)] = c
     
-    def setBrick(self, position, color):
-        self.bricks[position] = color
+    @staticmethod
+    def setBrick(position, color):
+        Gameboard.bricks[position] = color
         if color != "None":
-            self.bricks_c = color
-        self.update()
+            Gameboard.bricks_c = color
+        Gameboard.update()
 
-    def setHouse(self, position, color):
-        self.houses[position] = color
+    @staticmethod
+    def setHouse(position, color):
+        Gameboard.houses[position] = color
         if color != "None":
-            self.house_c = color
-        self.update()
+            Gameboard.house_c = color
+        Gameboard.update()
 
-    def setHuman(self, position, color):
-        self.humans[position] = color
+    @staticmethod
+    def setHuman(position, color):
+        Gameboard.humans[position] = color
         if color != "None":
-            self.humans_c = color
-        self.update()
+            Gameboard.humans_c = color
+        Gameboard.update()
 
-    def setSand(self, position, color):
-        self.sand[position] = color
+    @staticmethod
+    def setSand(position, color):
+        Gameboard.sand[position] = color
         if color != "None":
-            self.sand_c = color
-        self.update()
+            Gameboard.sand_c = color
+        Gameboard.update()
+
+    @staticmethod
+    def setBagDelivered(color):
+        Gameboard.deliveredBags.append(color)
+    
+    @staticmethod
+    def setBlockDelivered(color):
+        Gameboard.deliveredBlocks.append(color)
+

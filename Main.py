@@ -15,14 +15,23 @@ from ev3dev2 import power
 driveTrain = DriveTrain()
 gripper = Gripper()
 gripper2 = Gripper2()
-board = Gameboard(driveTrain)
 bagHandler = BagHandler(driveTrain, gripper)
 deichHandler = DeichHandler(gripper, gripper2, driveTrain, time, bagHandler)
-board.setHouse(3, "Green")
+Gameboard.setHouse(2, "Green")
+Gameboard.setHouse(3, "Blue")
 motors = Motors()
 
+Gameboard.setHuman(3, "Yellow")
+Gameboard.setBrick(2, "Yellow")
+RobotContainer.setLoaded(0, "Yellow")
 
-deichHandler.männlidriver(3, board.humans, board.houses)
+# deichHandler.scanHumans(3, -90)
+# print(Gameboard.humans)
+checkpoint = deichHandler.scanBlocks(3)
+print(Gameboard.humans)
+time.sleep(2)
+checkpoint = 2
+deichHandler.DeichPutDown(checkpoint)
 
 # print("Loaded " + str(RobotContainer.getLoaded()[0]))
 # bagHandler.pickUp(2, 0, board.houses)

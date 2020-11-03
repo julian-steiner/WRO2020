@@ -37,17 +37,6 @@ class DriveTrain:
                     self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed - aggression))
                 else:
                     self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
-
-            # if leftColor not in LineColor:
-            #     if rightColor not in LineColor:
-            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed))
-            #     else:
-            #         self.tank_drive.on(SpeedPercent(speed + aggression), SpeedPercent(speed))
-            # else:
-            #     if rightColor not in LineColor:
-            #         self.tank_drive.on(SpeedPercent(speed), SpeedPercent(speed + aggression))
-            #     else:
-            #         self.tank_drive.off()
         
         if distance == 0:
             lineDrive()

@@ -25,18 +25,17 @@ class Gripper2:
             elif num == 2:
                 return "None"
 
-        for i in range(10):
-            c2 = Motors.Gripper2.colorSensor.rgb
-            c = [[83, 3.5, 5.5], [68, 21, 5], [23, 16, 25]]
-            diff2 = []
-            for i in range(len(c)):
-                v2 = 0
-                for j in range(3):
-                    v2 += (c[i][j] - c2[j])**2
-                diff2.append(v2)
-            indeces = []
-            indeces.append(convertColor(diff2.index(min(diff2))))
-            return indeces
+        c2 = Motors.Gripper2.colorSensor.rgb
+        c = [[77, 6, 4], [51, 11, 4], [40, 20, 25]]
+        print(c2)
+        diff2 = []
+        for i in range(len(c)):
+            v2 = 0
+            for j in range(3):
+                v2 += (c[i][j] - c2[j])**2
+            diff2.append(v2)
+        
+        return convertColor(diff2.index(min(diff2)))
 
     def RomerColorPD(self):
         def convertColor(num):
