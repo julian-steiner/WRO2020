@@ -6,11 +6,13 @@ class Gameboard:
     humans_c = ""
     sand_c = ""
     houses = [0, 0, 0, 0]
+    house_positions = []
     sand = [0, 0, 0, 0]
     bricks = [0, 0, 0, 0]
     humans = [0, 0, 0, 0]
     deliveredBlocks = []
     deliveredBags = []
+    deliveredOrders = []
     stage = 0
     rc = rc.RobotContainer()
     
@@ -33,8 +35,14 @@ class Gameboard:
             for i in range(Gameboard.sand.count(0)):
                 Gameboard.sand[Gameboard.sand.index(0)] = "None"
 
-        #Autofill Nones in Bricks and Houses
-        if(Gameboard.bricks.count("Yellow") + Gameboard.bricks.count("Red") != 2 and Gameboard.bricks.count("None") < 2):
+        #Autofill Nones in Houses:
+        if(Gameboard.houses.count("Blue") + Gameboard.houses.count("Green") != 2 and Gameboard.houses.count("None") < 2):
+            for i in range(4):
+                if Gameboard.bricks[i] in ["Red", "Yellow"] or Gameboard.sand[i] in ["Green", "Blue"]:
+                    Gameboard.houses[i] = "None"
+
+        #Autofill Nones in Bricks and Sand
+        if((Gameboard.bricks.count("Yellow") + Gameboard.bricks.count("Red") != 2 and Gameboard.bricks.count("None") < 2) or (Gameboard.sand.count("Green") + Gameboard.sand.count("Blue") != 2 and Gameboard.sand.count("None") < 2)):
             for i in range(4):
                 if(Gameboard.houses[i] in ["Green", "Blue"]):
                     Gameboard.bricks[i] = "None"
@@ -96,6 +104,7 @@ class Gameboard:
         Gameboard.houses[position] = color
         if color != "None":
             Gameboard.house_c = color
+            Gameboard.house_positions.append(position)
         Gameboard.update()
 
     @staticmethod
@@ -120,3 +129,96 @@ class Gameboard:
     def setBlockDelivered(color):
         Gameboard.deliveredBlocks.append(color)
 
+    @staticmethod
+    def setOrderDelivered(checkpoint):
+        Gameboard.deliveredOrders.append(checkpoint)
+
+    @staticmethod 
+    def getDistance(p1, p2):
+        if p1 == p2:
+            return 0
+        elif p1 in [0, 1] and p2 in [0, 1]:
+            return 1
+        elif p1 in [2, 3] and p2 in [2, 3]:
+            return 1
+        else:
+            return 2
+    
+    @staticmethod
+    def calculateMove(checkpoint):
+        loaded_bag = rc.RobotContainer.getLoaded()[1]
+        loaded_brick = rc.RobotContainer.getLoaded()[2]
+        bags = Gameboard.sand
+        houses = Gameboard.houses
+        house_positions = Gameboard.house_positions
+        bricks = Gameboard.bricks
+        humans = Gameboard.humans
+        deliveredBags = Gameboard.deliveredBags
+        deliveredBlocks = Gameboard.deliveredBlocks
+        deliveredOrders = Gameboard.deliveredOrders
+        bagDistance = 3
+        brickDistance = 3
+
+        # #check if robot has to scan the house
+        # if houses[checkpoint] == 0:
+        #     return [3, checkpoint]
+        
+        #check if robot has to deliver the EvacuationOrder
+        if houses[checkpoint] not in ["None", 0] and checkpoint not in deliveredOrders:
+            return [0, checkpoint]
+        
+        #check if robot is loaded
+        if loaded_bag != None:
+            bagDistance = Gameboard.getDistance(checkpoint, houses.index(loaded_bag))
+        if loaded_brick != None:
+            brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
+
+        #return which item to put down
+        if bagDistance != 3 or brickDistance != 3:
+            if bagDistance <= brickDistance:
+                return [1, houses.index(loaded_bag)]
+            else:
+                return [2, humans.index(loaded_brick)]
+
+        m_possibilities = []
+        #check for scanning
+        if 0 in bags:
+            if 0 in bricks:
+                #check for matches (location to scan both)
+                for i in range(len(bags)):
+                    if(bricks[i] == 0):
+                        m_possibilities.append(i)
+                #check for männlidriver possibility
+                for possibility in m_possibilities:
+                    for house in house_positions:
+                        if Gameboard.getDistance(house, possibility) == 1:
+                            return [4, house]
+
+        #check if the robot has to scan the human at the position
+        if houses[checkpoint] not in ["None", 0] and humans[checkpoint] == 0:
+            return [5, checkpoint]
+
+        #check to scan a worst case szenario
+        print(house, possibility)
+        for possibility in m_possibilities:
+            for house in house_positions:
+                if Gameboard.getDistance(house, possibility) == 2:
+                    return [6, possibility]
+        
+        #check to scan a house
+        if 0 in houses:
+            positions = []
+            for i in range(houses.count(0)):
+                if(houses[i] == 0):
+                    positions.append(i)
+            return [3, min(positions)]
+
+
+
+       
+
+    
+
+            
+        
+        
