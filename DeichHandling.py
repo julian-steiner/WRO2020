@@ -23,11 +23,11 @@ class DeichHandler:
         männli = Gameboard.humans
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 90*(-1)**checkPoint)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-14)
-        self.Gripper2.movemotor(50,True)
+        self.Gripper2.movemotor(100,True)
         self.time.sleep(1)
         color = self.Gripper2.RomerColorPU()
         if color[0] not in männli:
-            self.Gripper2.movemotor(50,False)
+            self.Gripper2.movemotor(100,False)
         else:
             RobotContainer.setLoaded(0,color)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,14)
@@ -35,12 +35,6 @@ class DeichHandler:
         return color
     
     def scanHumans(self,checkPoint, angle):
-        # self.DriveTrain.turnToLine((-1)**(checkPoint + 1)*self.rc.TURN_SPEED,"Black"
-        # self.time.sleep(0.2)
-        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 5.7*(-1)**checkPoint)
-        # self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-43.75)
-        # color.append(self.Gripper2.RomerColorPD())
-        # self.DriveTrain.driveForward(self.rc.SPEED,17.75)
         if checkPoint == 0 or checkPoint == 2:
             angle = self.DriveTrain.optimizeAngle(90 - angle)
         else:
@@ -133,6 +127,97 @@ class DeichHandler:
             Gameboard.setBlockDelivered(color)
         else:
             print("Color not in humans")
+
+        elif startpunkt == 1:
+            if endpunkt == 0:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED,e_offset)
+            elif endpunkt == 2:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, long_distance)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif endpunkt == 3:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(-90))
+                self.driveForward(self.rc.SPEED, long_distance)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif endpunkt == 6:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, 27)
+                self.turnAngle(self.rc.TURN_SPEED, self.optimizeAngle(-90))
+                self.driveForward(self.rc.SPEED, 24)
+
+        if startpunkt == 2:
+            if endpunkt == 3:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED,e_offset)
+            elif endpunkt == 0:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, long_distance)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif endpunkt == 1:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, long_distance)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif endpunkt == 6:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.driveForward(self.rc.SPEED, 100)
+
+        if startpunkt == 3:
+            if endpunkt == 2:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.REDLINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif endpunkt == 0:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, long_distance)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif endpunkt == 1:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, long_distance)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+                self.turnAngle(self.rc.TURN_SPEED, e_offset)
+            elif endpunkt == 6:
+                self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
+                self.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.REDLINE, 25)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.driveForward(self.rc.SPEED, 100)
+
 
 #gripper2.movemotor(50,True)
 

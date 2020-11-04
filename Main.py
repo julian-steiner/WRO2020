@@ -16,6 +16,7 @@ driveTrain = DriveTrain()
 gripper = Gripper()
 gripper2 = Gripper2()
 bagHandler = BagHandler(driveTrain, gripper)
+<<<<<<< Updated upstream
 deichHandler = DeichHandler(gripper, gripper2, driveTrain, time, bagHandler)
 Gameboard.setHouse(2, "Green")
 Gameboard.setHouse(3, "Blue")
@@ -24,6 +25,15 @@ motors = Motors()
 Gameboard.setHuman(3, "Yellow")
 Gameboard.setBrick(2, "Yellow")
 RobotContainer.setLoaded(0, "Yellow")
+=======
+deichhandler = DeichHandler(gripper,gripper2,driveTrain,time,bagHandler)
+board.setHouse(3, "Green")
+motors = Motors()
+
+# print("Loaded " + str(RobotContainer.getLoaded()[0]))
+# bagHandler.pickUp(2, 0, board.houses)
+
+>>>>>>> Stashed changes
 
 # deichHandler.scanHumans(3, -90)
 # print(Gameboard.humans)
@@ -128,3 +138,21 @@ deichHandler.DeichPutDown(checkpoint)
 #     print(gripper2.RomerColorPD())
 #    print(motors.Gripper2.colorSensor.rgb)
 
+<<<<<<< Updated upstream
+=======
+# driveTrain.turnToLine((-1)**(0 + 1)*RobotContainer.TURN_SPEED,"Black")
+# time.sleep(0.2)
+# driveTrain.turnAngle(RobotContainer.TURN_SPEED, 8*(-1)**0)
+# time.sleep(0.2)
+# driveTrain.driveForward(RobotContainer.SLOW_SPEED,-49.5)
+
+# while True:
+# #     # print(gripper2.RomerColorPD())
+#     print(motors.Gripper2.colorSensor.rgb)
+
+gripper2.movemotor(100,True)
+
+deichhandler.deichbringer(0,2,-90)
+
+#driveTrain.center("Black","-1")
+>>>>>>> Stashed changes
