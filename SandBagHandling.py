@@ -21,8 +21,13 @@ class BagHandler:
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         self.DriveTrain.followToLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.LINE, ["Black", "Brown"])
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 9)
+<<<<<<< Updated upstream
         color = self.Gripper.RomerColor([45, 49, 72] ,[8, 7, 13], [0, 0, 1], "Green", "Blue", "None")
 
+=======
+        color = self.Gripper.RomerColor([30, 35, 41] ,[20, 17, 40], [0, 0, 1], "Green", "Blue", "None")
+        print(color)
+>>>>>>> Stashed changes
         if(color in houseColors):
             self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -15)
             self.DriveTrain.center("Black")

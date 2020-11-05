@@ -43,12 +43,11 @@ class Gripper2:
                 return "Red"
             elif num == 1:
                 return "Yellow"
-            elif num == 2:
-                return "None"
 
         for i in range(10):
             c2 = Motors.Gripper2.colorSensor.rgb
-            c = [[125, 24, 14], [122, 74, 18], [11, 8, 8]]
+            print(c2)
+            c = [[44, 1, 4], [45, 10, 4]]
             diff2 = []
             for i in range(len(c)):
                 v2 = 0
@@ -57,4 +56,4 @@ class Gripper2:
                 diff2.append(v2)
             indeces = []
             indeces.append(convertColor(diff2.index(min(diff2))))
-            return indeces
+            return indeces[0]
