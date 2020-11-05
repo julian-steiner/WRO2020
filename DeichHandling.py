@@ -104,7 +104,6 @@ class DeichHandler:
             offset = 90
         self.baghandler.pickUp(checkPointz, offset)
         
-
         return checkPointz
     
     def DeichPutDown(self, checkPoint, dislocated = 0):
