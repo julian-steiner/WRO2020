@@ -13,6 +13,7 @@ class Gameboard:
     deliveredBlocks = []
     deliveredBags = []
     deliveredOrders = []
+    bricksArranged = []
     stage = 0
     rc = rc.RobotContainer()
     
@@ -97,6 +98,7 @@ class Gameboard:
         Gameboard.bricks[position] = color
         if color != "None":
             Gameboard.bricks_c = color
+            Gameboard.bricksArranged = color
         Gameboard.update()
 
     @staticmethod
@@ -146,6 +148,7 @@ class Gameboard:
     
     @staticmethod
     def calculateMove(checkpoint):
+        Gameboard.update()
         loaded_bag = rc.RobotContainer.getLoaded()[1]
         loaded_brick = rc.RobotContainer.getLoaded()[2]
         bags = Gameboard.sand
@@ -197,28 +200,63 @@ class Gameboard:
         #check if the robot has to scan the human at the position
         if houses[checkpoint] not in ["None", 0] and humans[checkpoint] == 0:
             return [5, checkpoint]
-
-        #check to scan a worst case szenario
-        print(house, possibility)
-        for possibility in m_possibilities:
-            for house in house_positions:
-                if Gameboard.getDistance(house, possibility) == 2:
-                    return [6, possibility]
         
         #check to scan a house
         if 0 in houses:
             positions = []
-            for i in range(houses.count(0)):
+            for i in range(4):
                 if(houses[i] == 0):
                     positions.append(i)
-            return [3, min(positions)]
+            if len(positions) != 0:
+                return [3, min(positions)]
 
+        #check to get sand bags
+        if len(deliveredBags) < 2 or len(deliveredBlocks) < 2:
+            todoBags = []
+            todoBlocks = []
+            mWithout_possibilities = []
+            mPickup_possibilities = []
+            for i in range(4):
+                if bags[i] in ["Green", "Blue"] and bags[i] not in deliveredBags and bags[i] in houses:
+                    todoBags.append(i)
+                if bricks[i] in ["Yellow", "Red"] and bricks[i] not in deliveredBlocks and bricks[i] in humans:
+                    todoBlocks.append(i)
+            for i in range(4):
+                if i in todoBags and i in todoBlocks and bricks[i] not in Gameboard.bricksArranged:
+                    mWithout_possibilities.append(i)
+            for i in range(4):
+                if i in todoBags and i in todoBlocks:
+                    mPickup_possibilities.append(i)
 
+            for possibility in mWithout_possibilities:
+                    for house in house_positions:
+                        if Gameboard.getDistance(house, possibility) == 1:
+                            return [9, house]
 
-       
+            for possibility in mPickup_possibilities:
+                    for house in house_positions:
+                        print("Distance" + str(Gameboard.getDistance(house, possibility)))
+                        if Gameboard.getDistance(house, possibility):
+                            return [10, possibility]
 
-    
-
+            if len(todoBags) > 0:
+                distances = [3, 3, 3, 3]
+                for i in range(len(todoBags)):
+                    distances[todoBags[i]] = Gameboard.getDistance(checkpoint, todoBags[0])
+                return [7, min(distances)]
             
+            if len(todoBlocks) > 0:
+                distances = [3, 3, 3, 3]
+                for i in range(len(todoBlocks)):
+                    distances[todoBlocks[i]] = Gameboard.getDistance(checkpoint, todoBlocks[0])
+                return [8, min(distances)]
+
+        #check to scan a worst case szenario
+        if(houses.count(0) == 0):
+            for possibility in m_possibilities:
+                for house in house_positions:
+                    if Gameboard.getDistance(house, possibility) == 2:
+                        return [6, possibility]
         
-        
+        #return to drive to r6
+        return [11, 6]
