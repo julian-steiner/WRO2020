@@ -18,8 +18,6 @@ gripper2 = Gripper2()
 bagHandler = BagHandler(driveTrain, gripper)
 <<<<<<< Updated upstream
 deichHandler = DeichHandler(gripper, gripper2, driveTrain, time, bagHandler)
-Gameboard.setHouse(2, "Green")
-Gameboard.setHouse(3, "Blue")
 motors = Motors()
 
 Gameboard.setHuman(3, "Yellow")
@@ -42,6 +40,19 @@ print(Gameboard.humans)
 time.sleep(2)
 checkpoint = 2
 deichHandler.DeichPutDown(checkpoint)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # print("Loaded " + str(RobotContainer.getLoaded()[0]))
 # bagHandler.pickUp(2, 0, board.houses)

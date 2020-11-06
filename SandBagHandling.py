@@ -11,7 +11,7 @@ class BagHandler:
         self.Gripper = Gripper
         self.rc = RobotContainer()
 
-    def pickUp(self, startPoint, offset):
+    def scanBags(self, startPoint, offset):
         houseColors = Gameboard.houses
         if startPoint == 0 or startPoint == 2:
             angle = 90 - offset
@@ -20,15 +20,9 @@ class BagHandler:
 
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         self.DriveTrain.followToLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.LINE, ["Black", "Brown"])
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 9)
-<<<<<<< Updated upstream
-        color = self.Gripper.RomerColor([45, 49, 72] ,[8, 7, 13], [0, 0, 1], "Green", "Blue", "None")
-
-=======
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 10)
         color = self.Gripper.RomerColor([30, 35, 41] ,[20, 17, 40], [0, 0, 1], "Green", "Blue", "None")
-        print(color)
->>>>>>> Stashed changes
-        if(color in houseColors):
+        if(color in houseColors and color != "None"):
             self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -15)
             self.DriveTrain.center("Black")
             self.Gripper.lowerMotor(-40)
@@ -37,7 +31,21 @@ class BagHandler:
             self.Gripper.moveMotor(10, 160)
             self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, -1)
 
-        print(color, Motors.Gripper1.colorSensor.rgb)
+    def pickUp(self, startPoint):
+        if startPoint == 0 or startPoint == 2:
+            angle = 90
+        else:
+            angle = -90
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
+        self.DriveTrain.driveForward(self.rc.SPEED, 7)
+        self.DriveTrain.center("Black")
+        self.Gripper.lowerMotor(-40)
+        self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 14)
+        self.Gripper.moveMotor(10, 160)
+        self.DriveTrain.driveForward(self.rc.SPEED, -23)
+        RobotContainer.setLoaded(Gameboard.sand[startPoint], 0)
+
+
         
     def deliver(self, startPoint, offset):
         self.Gripper.moveMotor(20, 1)
