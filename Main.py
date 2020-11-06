@@ -17,13 +17,49 @@ gripper2 = Gripper2()
 driveTrain = DriveTrain()
 bagHandler = BagHandler(driveTrain, gripper)
 deichHandler = DeichHandler(gripper, gripper2, driveTrain, bagHandler)
+orderHandler = OrderHandling(driveTrain, gripper)
 
-Gameboard.setBrick(2, "Yellow")
-Gameboard.setHuman(3, "Yellow")
-Gameboard.setHouse(3, "Blue")
-Gameboard.setSand(2, "Blue")
+checkpoint = 0
+driveTrain.driveCheckpoints(6, 0, 0, 0)
 
-deichHandler.männliDriver(3)
+while checkpoint != 6:
+    action = Gameboard.calculateMove(checkpoint)
+    if action[0] == 0:
+        orderHandler.deliverOrder(checkpoint)
+    elif action[0] == 1:
+        bagHandler.deliver(checkpoint, 0)
+    elif action[0] == 2:
+        checkpoint = deichHandler.DeichPutDown(checkpoint)
+    elif action[0] == 3:
+        print("Function Missing")
+        pass
+    elif action[0] == 4:
+        deichHandler.scanHumans(checkpoint, 0, True)
+        checkpoint = deichHandler.scanBlocks(checkpoint, True)
+    elif action[0] == 5:
+        deichHandler.scanHumans(checkpoint, 0, True)
+        driveTrain.turnAngle(RobotContainer.TURN_SPEED, 180)
+        driveTrain.driveForward(RobotContainer.SPEED, 22)
+    elif action[0] == 6:
+        checkpoint = deichHandler.WorstCase(checkpoint)
+    elif action[0] == 7:
+        driveTrain.driveCheckpoints(checkpoint, action[1], 0, 0)
+        checkpoint = action[1]
+        bagHandler.pickUp(checkpoint)
+    elif action[0] == 8:
+        driveTrain.driveCheckpoints(checkpoint, action[1], 0, 0)
+        checkpoint = action[1]
+        deichHandler.DeichPickUp(checkpoint)
+    elif action[0] == 9:
+        checkpoint = deichHandler.männliDriver(checkpoint)
+    elif action[0] == 10:
+        driveTrain.driveCheckpoints(checkpoint, action[1], 0, 0)
+        checkpoint = action[1]
+        deichHandler.pickUpBoth(checkpoint)
+    elif action[0] == 11:
+        driveTrain.driveCheckpoints(checkpoint, 6, 0, 0)
+        checkpoint = 6
 
-print(Gameboard.bricks)
-print(Gameboard.humans)
+
+        
+
