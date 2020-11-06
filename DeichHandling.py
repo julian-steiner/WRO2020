@@ -102,13 +102,6 @@ class DeichHandler:
 
         self.driveToPoint(checkPointz)
 
-<<<<<<< HEAD
-    def driveToPoint(self, checkPointz):
-        sleep(0.5)
-        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,9)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,90*(-1)**(checkPointz))
-        # self.DriveTrain.center("Black", direction='-1')
-=======
 # Zur mitte fahren
 
     def driveToPoint(self, checkPointz):
@@ -117,15 +110,11 @@ class DeichHandler:
         print(90*(-1)**(checkPointz))
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED,90*(-1)**(checkPointz))
         #self.DriveTrain.center("Black", direction='-1')
->>>>>>> develop
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,20)
         if checkPointz in [0, 2]:
             offset = -90
         else:
             offset = 90
-<<<<<<< HEAD
-        self.baghandler.pickUp(checkPointz, offset)
-=======
         self.baghandler.scanBags(checkPointz, offset)
         if RobotContainer.getLoaded()[2] != None and RobotContainer.getLoaded()[2] in Gameboard.humans:
             if(Gameboard.getDistance(checkPointz, Gameboard.humans.index(RobotContainer.getLoaded()[2])) == 1):
@@ -133,7 +122,6 @@ class DeichHandler:
                 return(checkPointz)
 
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -24)
->>>>>>> develop
         return checkPointz
 
     def männliDriver(self, checkPoint):
@@ -208,10 +196,10 @@ class DeichHandler:
                 self.DriveTrain.driveForward(self.rc.SPEED, 57)
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
                 self.DriveTrain.center("Black")
-                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -9)
+                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -11)
                 self.Gripper2.movemotor(50, False)
                 sleep(0.5)
-                self.DriveTrain.driveForward(self.rc.SPEED, 32)
+                self.DriveTrain.driveForward(self.rc.SPEED, 33)
             else:
                 destination = humans.index(color)
                 if checkPoint in [0, 2]:
@@ -231,7 +219,6 @@ class DeichHandler:
                 Gameboard.setBlockDelivered(color)
         else:
             print("Color not in humans")
-<<<<<<< HEAD
     
     def WorstCase(self,checkPoint):
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
@@ -261,5 +248,3 @@ class DeichHandler:
         if color in Gameboard.humans:
             self.Gripper2.movemotor(100,True)
         self.driveToPoint(checkPointz)
-=======
->>>>>>> develop
