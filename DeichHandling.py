@@ -33,18 +33,18 @@ class DeichHandler:
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 20)
     
     def pickUpBoth(self, checkPoint):
-        #pick up the 
         angle = 90*(-1)**(checkPoint+1)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.center("Black")
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, (-1)**(checkPoint)*9)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -24)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -20)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -15)
         self.Gripper2.movemotor(100, True)
         sleep(0.5)
         RobotContainer.setLoaded(0, Gameboard.bricks[checkPoint])
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,15)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint),"Black")
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, (-1)**(checkPoint + 1)*9)
         self.DriveTrain.followLine(self.rc.TURN_SPEED, self.rc.AGGRESSION, self.rc.LINE, 22)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
         self.baghandler.pickUp(checkPoint)
@@ -102,8 +102,6 @@ class DeichHandler:
 
         self.driveToPoint(checkPointz)
 
-# Zur mitte fahren
-
     def driveToPoint(self, checkPointz):
         sleep(0.5)
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,9)
@@ -127,7 +125,7 @@ class DeichHandler:
     def männliDriver(self, checkPoint):
         männli = Gameboard.humans
 
-        #Drive to the turning point
+        # Drive to the turning point
         if checkPoint == 0 or checkPoint == 2:
             angle = self.DriveTrain.optimizeAngle(90)
         else:
@@ -143,7 +141,7 @@ class DeichHandler:
             angle = 90
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         sleep(1)
-        #Drive to the blocks
+# Drive to the blocks
         self.DriveTrain.driveForward(self.rc.SPEED, 17)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-95)
 
@@ -181,8 +179,6 @@ class DeichHandler:
 
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -23)
 
-    
-    
     def DeichPutDown(self, checkPoint, dislocated = 1):
         color = RobotContainer.getLoaded()[2]
         humans = Gameboard.humans

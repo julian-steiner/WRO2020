@@ -32,11 +32,8 @@ class BagHandler:
             self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, -1)
 
     def pickUp(self, startPoint, driveBack = "1"):
-        if startPoint == 0 or startPoint == 2:
-            angle = 90
-        else:
-            angle = -90
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint),"Black")
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(startPoint + 1)*9)
         sleep(0.2)
         self.DriveTrain.driveForward(self.rc.SPEED, 7)
         self.DriveTrain.center("Black")
