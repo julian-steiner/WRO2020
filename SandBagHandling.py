@@ -33,8 +33,13 @@ class BagHandler:
         return 0
 
     def pickUp(self, startPoint, driveBack = "1"):
+<<<<<<< HEAD
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint),"Black")
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(startPoint + 1)*9)
+=======
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
         self.DriveTrain.center("Black")
+>>>>>>> develop
         sleep(0.2)
         self.DriveTrain.driveForward(self.rc.SPEED, 7)
         self.Gripper.lowerMotor(-40)
