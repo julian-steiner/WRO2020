@@ -30,6 +30,7 @@ class BagHandler:
             RobotContainer.setLoaded(color, 0)
             self.Gripper.moveMotor(10, 150)
             self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, -1)
+        return 0
 
     def pickUp(self, startPoint, driveBack = "1"):
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)

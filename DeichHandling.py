@@ -94,6 +94,7 @@ class DeichHandler:
             c_color = Gameboard.bricks[checkPointz]
         Gameboard.setBrick(checkPointz, c_color)
         if c_color in männli and c_color != "None":
+            print(c_color, männli)
             self.Gripper2.movemotor(100,True)
             RobotContainer.setLoaded(0, c_color)
         elif c_color == "None":
@@ -124,6 +125,7 @@ class DeichHandler:
                 return(checkPointz)
 
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -24)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -90*(-1)**(checkPointz))
         return checkPointz
 
     def männliDriver(self, checkPoint):
@@ -202,6 +204,7 @@ class DeichHandler:
                 sleep(0.5)
                 self.DriveTrain.driveForward(self.rc.SPEED, 33)
                 destination = Gameboard.humans.index(color)
+                self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
                 return destination
             else:
                 destination = humans.index(color)
