@@ -21,16 +21,16 @@ class DeichHandler:
     def DeichPickUp(self,checkPoint):
         angle = 90*(-1)**(checkPoint+1)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.center("Black")
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -24)
+        self.DriveTrain.driveForward(self.rc.SPEED, -24)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -20)
+        self.DriveTrain.driveForward(self.rc.SPEED, -14)
         self.Gripper2.movemotor(100, True)
         sleep(0.5)
         RobotContainer.setLoaded(0, Gameboard.bricks[checkPoint])
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED,15)
+        self.DriveTrain.driveForward(self.rc.SPEED,13)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
-        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 20)
+        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 18)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
     
     def pickUpBoth(self, checkPoint):
         angle = 90*(-1)**(checkPoint+1)

@@ -45,9 +45,6 @@ class BagHandler:
             self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 90*(-1)**startPoint)
         elif driveBack != "1":
             self.DriveTrain.driveForward(self.rc.SPEED, 2)
-
-
-
         
     def deliver(self, startPoint, offset):
         self.Gripper.moveMotor(20, 1)
