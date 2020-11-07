@@ -18,7 +18,7 @@ class RobotContainer:
     LINE = ["Black"]
     BLUELINE = ["Blue", "Green"]
     REDLINE = ["Red", "Yellow"]
-    LOADED_FACTOR = 1.05
+    LOADED_FACTOR = 1.02
     @staticmethod 
     def setLoaded(bags, blocks):
         global LOADED_BLOCKS, LOADED_BAGS
