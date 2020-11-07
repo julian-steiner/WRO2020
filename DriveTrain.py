@@ -81,13 +81,14 @@ class DriveTrain:
     
     def turnAngle(self, speed, angle):
         self.tank_drive.off()
-        time.sleep(0.1)
+        time.sleep(0.2)
         angle *= -1
         angle = self.optimizeAngle(angle)
         if(RobotContainer.RobotContainer.getLoaded()[0]):
             speed = self.rc.SLOW_TURN_SPEED
         rotations = (angle * self.rc.WHEEL_DISTANCE) / (360 * self.rc.WHEEL_DIAMETER)
         self.tank_drive.on_for_rotations(SpeedPercent(speed), SpeedPercent(-speed), rotations)
+        time.sleep(0.2)
 
     def center(self, color, direction = '1'):
         speed = 5

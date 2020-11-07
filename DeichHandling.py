@@ -189,6 +189,8 @@ class DeichHandler:
     def DeichPutDown(self, checkPoint, dislocated = 1):
         color = RobotContainer.getLoaded()[2]
         humans = Gameboard.humans
+        self.Gripper2.movemotor(100, True)
+
         if color in humans:
             if dislocated == 0:
                 if checkPoint in [0, 2]:
@@ -207,24 +209,15 @@ class DeichHandler:
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
                 return destination
             else:
-                destination = humans.index(color)
-                if checkPoint in [0, 2]:
-                    self.DriveTrain.driveCheckpoints(checkPoint, destination, -90, 0)
-                else:
-                    self.DriveTrain.driveCheckpoints(checkPoint, destination, 90, 0)
-                if destination in [0, 2]:
-                    angle = -90
-                else:
-                    angle = 90
-                self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, angle)
-                #self.DriveTrain.center("Black", direction='-1')
-                self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-36)
+                self.DriveTrain.turnToLine(-self.rc.TURN_SPEED*(-1)**(checkPoint), self.rc.LINE)
+                self.DriveTrain.driveForward(self.rc.SPEED,-33)
                 self.Gripper2.movemotor(50,False)
-                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 36)
+                self.DriveTrain.driveForward(self.rc.SPEED, 31)
                 RobotContainer.setLoaded(0, None)
                 Gameboard.setBlockDelivered(color)
+                self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -90*(-1)**(checkPoint))
 
-                return destination
+                return checkPoint
         else:
             print("Color not in humans")
     
