@@ -125,18 +125,8 @@ class DeichHandler:
     def männliDriver(self, checkPoint):
         männli = Gameboard.humans
 
-<<<<<<< HEAD
-        # Drive to the turning point
-        if checkPoint == 0 or checkPoint == 2:
-            angle = self.DriveTrain.optimizeAngle(90)
-        else:
-            angle = self.DriveTrain.optimizeAngle(-90)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.center("Black")
-=======
         #Drive to the turning point
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint), self.rc.LINE)
->>>>>>> develop
         self.DriveTrain.driveToLine(self.rc.SPEED, self.rc.LINE)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 11.5)
 
@@ -186,13 +176,10 @@ class DeichHandler:
 
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -23)
 
-<<<<<<< HEAD
-=======
         return(checkPointz)
 
     
     
->>>>>>> develop
     def DeichPutDown(self, checkPoint, dislocated = 1):
         color = RobotContainer.getLoaded()[2]
         humans = Gameboard.humans
