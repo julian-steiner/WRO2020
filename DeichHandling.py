@@ -49,49 +49,45 @@ class DeichHandler:
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
         self.baghandler.pickUp(checkPoint)
     
-    def scanHumans(self,checkPoint, angle, scann):
-        if checkPoint == 0 or checkPoint == 2:
-            angle = self.DriveTrain.optimizeAngle(90 - angle)
-        else:
-            angle = self.DriveTrain.optimizeAngle(-90 - angle)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.center("Black")
+    def scanHumans(self,checkPoint, angle):
+        # if checkPoint == 0 or checkPoint == 2:
+        #     angle = self.DriveTrain.optimizeAngle(90 - angle)
+        # else:
+        #     angle = self.DriveTrain.optimizeAngle(-90 - angle)
+        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**checkPoint, self.rc.LINE)
         self.DriveTrain.driveToLine(self.rc.SPEED, self.rc.LINE)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 11.5)
-        if scann == True:
-            self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 4)
-            sleep(0.5)
-            yellow = [34, 14, 8]
-            red = [36, 10, 11]
-            c_color = self.Gripper.RomerColor(red ,yellow, [0, 0, 1], "Red", "Yellow", "None")
-            if(c_color == "None"):
-                self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 1)
-                c_color = self.Gripper.RomerColor(red, yellow, [0, 0, 1], "Red", "Yellow", "None")
-            log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
-            log(c_color, "Color of the front sensor")
-            Gameboard.setHuman(checkPoint, c_color)
-            self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -4)
+        self.DriveTrain.driveForward(self.rc.SPEED, 11.5)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 4)
+        sleep(0.5)
+        yellow = [34, 14, 8]
+        red = [36, 10, 11]
+        c_color = self.Gripper.RomerColor(red ,yellow, [0, 0, 1], "Red", "Yellow", "None")
+        if(c_color == "None"):
+            self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 1)
+            c_color = self.Gripper.RomerColor(red, yellow, [0, 0, 1], "Red", "Yellow", "None")
+        log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
+        log(c_color, "Color of the front sensor")
+        Gameboard.setHuman(checkPoint, c_color)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -4)
 
-    def scanBlocks(self, checkPoint, scann):
+    def scanBlocks(self, checkPoint):
         männli = Gameboard.humans
         if checkPoint == 0 or checkPoint == 2:
             angle = -90
         else:
             angle = 90
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        sleep(1)
         self.DriveTrain.driveForward(self.rc.SPEED, 17)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-95)
+        sleep(0.5)
+        self.DriveTrain.driveForward(self.rc.SPEED,-95)
         if checkPoint % 2 == 1:
             checkPointz = checkPoint - 1
         if checkPoint % 2 == 0:
             checkPointz = checkPoint + 1
-        if scann == True:
-            c_color = self.Gripper2.RomerColorPU()
-            log(Motors.Gripper2.colorSensor.rgb, "RGB Value of the back sensor")
-            log(c_color, "Color of the back sensor")
-        else:
-            c_color = Gameboard.bricks[checkPointz]
+        c_color = self.Gripper2.RomerColorPU()
+        log(Motors.Gripper2.colorSensor.rgb, "RGB Value of the back sensor")
+        log(c_color, "Color of the back sensor")
         Gameboard.setBrick(checkPointz, c_color)
         if c_color in männli and c_color != "None":
             print(c_color, männli)
@@ -198,16 +194,20 @@ class DeichHandler:
                 else:
                     angle = -90
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-                self.DriveTrain.driveForward(self.rc.SPEED, 57)
+                # self.DriveTrain.driveForward(self.rc.SPEED, 57)
+                self.DriveTrain.driveForward(self.rc.SPEED, 20)
+                self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 30)
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-                self.DriveTrain.center("Black", direction=-1)
-                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -14)
+                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -13)
                 self.Gripper2.movemotor(50, False)
                 sleep(0.5)
-                self.DriveTrain.driveForward(self.rc.SPEED, 33)
+                self.DriveTrain.driveForward(self.rc.SPEED, 2)
+                self.DriveTrain.center("Black")
+                self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 27)
                 destination = Gameboard.humans.index(color)
-                self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
+                self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
                 return destination
+
             else:
                 self.DriveTrain.turnToLine(-self.rc.TURN_SPEED*(-1)**(checkPoint), self.rc.LINE)
                 self.DriveTrain.driveForward(self.rc.SPEED,-33)

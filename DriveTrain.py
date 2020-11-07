@@ -140,12 +140,12 @@ class DriveTrain:
         if(speed > 0):
             while Motors.DriveTrain.driveColorRight.color_name not in lineColor:
                 pass
-            self.turnAngle(speed, 4)
+            self.turnAngle(speed, 6)
             self.tank_drive.stop()
         else:
             while Motors.DriveTrain.driveColorLeft.color_name not in lineColor:
                 pass
-            self.turnAngle(speed, -4)
+            self.turnAngle(speed, 6)
             self.tank_drive.stop()
             
     def getMotorRotations(self):
