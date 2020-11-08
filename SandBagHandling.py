@@ -33,6 +33,7 @@ class BagHandler:
 
     def pickUp(self, startPoint, driveBack = "1"):
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
+        self.DriveTrain.center("Black")
         sleep(0.2)
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 4.5)
         self.DriveTrain.center("Black")
