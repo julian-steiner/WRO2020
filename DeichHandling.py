@@ -18,7 +18,7 @@ class DeichHandler:
         self.rc = RobotContainer
         self.baghandler = BagHandler
     
-    def DeichPickUp(self,checkPoint):
+    def DeichPickUp(self,checkPoint, e_offset = 180):
         angle = 90*(-1)**(checkPoint+1)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         self.DriveTrain.driveForward(self.rc.SPEED, -24)
@@ -30,23 +30,24 @@ class DeichHandler:
         self.DriveTrain.driveForward(self.rc.SPEED,13)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 18)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, e_offset - angle)
     
     def pickUpBoth(self, checkPoint):
-        angle = 90*(-1)**(checkPoint+1)
-        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, (-1)**(checkPoint)*9)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -24)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -15)
-        self.Gripper2.movemotor(100, True)
-        sleep(0.5)
-        RobotContainer.setLoaded(Gameboard.sand[checkPoint], Gameboard.bricks[checkPoint])
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED,15)
-        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint),"Black")
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, (-1)**(checkPoint + 1)*9)
-        self.DriveTrain.followLine(self.rc.TURN_SPEED, self.rc.AGGRESSION, self.rc.LINE, 22)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
+        # angle = 90*(-1)**(checkPoint+1)
+        # self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
+        # self.DriveTrain.driveForward(self.rc.SPEED, -24)
+        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
+        # self.DriveTrain.driveForward(self.rc.SPEED, -15)
+        # self.Gripper2.movemotor(100, True)
+        # sleep(0.5)
+        # RobotContainer.setLoaded(Gameboard.sand[checkPoint], Gameboard.bricks[checkPoint])
+        # self.DriveTrain.driveForward(self.rc.SLOW_SPEED,15)
+        # self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint),"Black")
+        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED, (-1)**(checkPoint + 1)*9)
+        # self.DriveTrain.followLine(self.rc.TURN_SPEED, self.rc.AGGRESSION, self.rc.LINE, 22)
+        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
+        # self.baghandler.pickUp(checkPoint)
+        self.DeichPickUp(checkPoint, 0)
         self.baghandler.pickUp(checkPoint)
     
     def scanHumans(self,checkPoint, angle):

@@ -34,15 +34,15 @@ class BagHandler:
     def pickUp(self, startPoint, driveBack = "1"):
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
         sleep(0.2)
-        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 4.5)
-        self.DriveTrain.center("Black")
+        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
+        self.DriveTrain.center("Black", direction=1 * (-1) ** startPoint)
         self.Gripper.lowerMotor(-40)
-        self.DriveTrain.driveForward(self.rc.SPEED, 12.5)
+        self.DriveTrain.driveForward(self.rc.SPEED, 13)
         self.Gripper.moveMotor(10, 150)
         RobotContainer.setLoaded(Gameboard.sand[startPoint], 0)
 
         if driveBack == "1":
-            self.DriveTrain.driveForward(self.rc.SPEED, -25)
+            self.DriveTrain.driveForward(self.rc.SPEED, -24)
             self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 90*(-1)**startPoint)
         elif driveBack != "1":
             self.DriveTrain.driveForward(self.rc.SPEED, 2)
