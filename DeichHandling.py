@@ -105,6 +105,7 @@ class DeichHandler:
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,9)
         print(90*(-1)**(checkPointz))
         # self.DriveTrain.turnAngle(self.rc.TURN_SPEED,90*(-1)**(checkPointz))
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 60*(-1)**(checkPointz))
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPointz), self.rc.LINE)
         #self.DriveTrain.center("Black", direction='-1')
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,20)
@@ -128,17 +129,17 @@ class DeichHandler:
         #Drive to the turning point
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint), self.rc.LINE)
         self.DriveTrain.driveToLine(self.rc.SPEED, self.rc.LINE)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 11.5)
+        self.DriveTrain.driveForward(self.rc.SPEED, 11)
 
         if checkPoint == 0 or checkPoint == 2:
             angle = -90
         else:
             angle = 90
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        sleep(1)
+        sleep(0.5)
 # Drive to the blocks
         self.DriveTrain.driveForward(self.rc.SPEED, 17)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-95)
+        self.DriveTrain.driveForward(self.rc.SPEED,-95)
 
         if checkPoint % 2 == 1:
             checkPointz = checkPoint - 1
@@ -156,7 +157,7 @@ class DeichHandler:
         sleep(0.5)
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,11)
         # self.DriveTrain.turnAngle(self.rc.TURN_SPEED,90*(-1)**(checkPointz))
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 20*(-1)**(checkPointz))
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 60*(-1)**(checkPointz))
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPointz), self.rc.LINE)
         #self.DriveTrain.center("Black", direction='-1')
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,20)
@@ -174,7 +175,9 @@ class DeichHandler:
                 self.DeichPutDown(checkPointz, dislocated=0)
                 return(checkPointz)
 
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -23)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -24)
+
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -90*(-1)**checkPoint)
 
         return(checkPointz)
 
@@ -194,13 +197,13 @@ class DeichHandler:
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
                 # self.DriveTrain.driveForward(self.rc.SPEED, 57)
                 self.DriveTrain.driveForward(self.rc.SPEED, 20)
-                self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 30)
+                self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 33)
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -13)
+                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -12.5)
                 self.Gripper2.movemotor(50, False)
                 sleep(0.5)
                 self.DriveTrain.driveForward(self.rc.SPEED, 2)
-                self.DriveTrain.center("Black")
+                self.DriveTrain.center("Black", direction='-1')
                 self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 27)
                 destination = Gameboard.humans.index(color)
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
