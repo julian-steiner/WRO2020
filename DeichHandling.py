@@ -50,11 +50,6 @@ class DeichHandler:
         self.baghandler.pickUp(checkPoint)
     
     def scanHumans(self,checkPoint, angle):
-        # if checkPoint == 0 or checkPoint == 2:
-        #     angle = self.DriveTrain.optimizeAngle(90 - angle)
-        # else:
-        #     angle = self.DriveTrain.optimizeAngle(-90 - angle)
-        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**checkPoint, self.rc.LINE)
         self.DriveTrain.driveToLine(self.rc.SPEED, self.rc.LINE)
         self.DriveTrain.driveForward(self.rc.SPEED, 11.5)
@@ -223,25 +218,30 @@ class DeichHandler:
             print("Color not in humans")
     
     def WorstCase(self,checkPoint):
-        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**checkPoint*9)
+        self.DriveTrain.driveForward(self.rc.SPEED,1.5)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,90*(-1)**(checkPoint + 1))
+        # self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
+        # self.DriveTrain.center("Black")
         sleep(0.2)
         self.DriveTrain.driveForward(self.rc.SPEED,-26.5)
         self.Gripper.moveMotor(100,-210)
-        self.DriveTrain.turnAngle(self.rc.SLOW_TURN_SPEED,(-1)**(checkPoint + 1)*130)
-        self.DriveTrain.turnAngle(self.rc.SLOW_TURN_SPEED,(-1)**(checkPoint)*40)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*140)
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint),"Black")
+        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*130)
+        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint)*20)
         sleep(0.2)
         self.Gripper.moveMotor(100,210)
         sleep(0.2)
 # Scannen
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-23)
+        self.DriveTrain.driveForward(self.rc.SPEED,-23)
         c_color = self.Gripper2.RomerColorPU()
         Gameboard.setBrick(checkPoint,c_color)
 # Drehen
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED,23)
-        self.DriveTrain.turnAngle(self.rc.SLOW_TURN_SPEED,(-1)**(checkPoint)*173.5)
+        self.DriveTrain.driveForward(self.rc.SPEED,23)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint)*179)
+        self.DriveTrain.center("Black",-1)
 # Seite wechslen
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED,-85)
+        self.DriveTrain.driveForward(self.rc.SPEED,-85)
         if checkPoint % 2 == 1:
             checkPointz = checkPoint - 1
         if checkPoint % 2 == 0:
