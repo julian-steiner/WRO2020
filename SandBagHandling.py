@@ -13,18 +13,19 @@ class BagHandler:
 
     def scanBags(self, startPoint, offset):
         houseColors = Gameboard.houses
-        if startPoint == 0 or startPoint == 2:
-            angle = 90 - offset
-        else:
-            angle = -90 - offset
 
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.followToLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.LINE, self.rc.LINE)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 10)
-        color = self.Gripper.RomerColor([30, 35, 41] ,[20, 17, 40], [0, 0, 1], "Green", "Blue", "None")
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED * (-1) ** (startPoint), 160)
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
+        sleep(0.2)
+        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
+        self.DriveTrain.driveForward(self.rc.SPEED, 12)
+        
+        color = self.Gripper.RomerColor([16, 33, 31] ,[20, 20, 67], [0, 0, 1], "Green", "Blue", "None")
+        print(Motors.Gripper1.colorSensor.rgb)
+        print("Color of the bags is:    " + str(color))
         if(color in houseColors and color != "None"):
             self.DriveTrain.driveForward(self.rc.SPEED, -15)
-            self.DriveTrain.center("Black")
+            self.DriveTrain.center("Black", direction=1 * (-1) ** startPoint)
             self.Gripper.lowerMotor(-40)
             self.DriveTrain.driveForward(self.rc.SPEED, 12)
             RobotContainer.setLoaded(color, 0)
@@ -33,7 +34,6 @@ class BagHandler:
 
     def pickUp(self, startPoint, driveBack = "1"):
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
-        self.DriveTrain.center("Black")
         sleep(0.2)
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
         self.DriveTrain.center("Black", direction=1 * (-1) ** startPoint)

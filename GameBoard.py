@@ -216,13 +216,14 @@ class Gameboard:
             todoBlocks = []
             mWithout_possibilities = []
             mPickup_possibilities = []
+            print("Bricks at the position: " + str(bricks))
             for i in range(4):
                 if bags[i] in ["Green", "Blue"] and bags[i] not in deliveredBags and bags[i] in houses:
                     todoBags.append(i)
                 if bricks[i] in ["Yellow", "Red"] and bricks[i] not in deliveredBlocks and bricks[i] in humans:
                     todoBlocks.append(i)
             for i in range(4):
-                if i in todoBags and i in todoBlocks and bricks[i] not in Gameboard.bricksArranged:
+                if i in todoBlocks and bricks[i] not in Gameboard.bricksArranged:
                     mWithout_possibilities.append(i)
             for i in range(4):
                 if i in todoBags and i in todoBlocks:

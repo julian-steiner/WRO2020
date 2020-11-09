@@ -90,9 +90,9 @@ class DriveTrain:
         self.tank_drive.on_for_rotations(SpeedPercent(speed), SpeedPercent(-speed), rotations)
         time.sleep(0.2)
 
-    def center(self, color, direction = '1'):
+    def center(self, color, direction = 1):
         speed = 5
-        if(direction == '1'):
+        if(direction == 1):
             while Motors.DriveTrain.driveColorLeft.color_name != color:
                 self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
             while Motors.DriveTrain.driveColorRight.color_name != color:
