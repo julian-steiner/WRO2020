@@ -63,7 +63,7 @@ while checkpoint != 6:
         offset = 0
     elif action[0] == 5:
         deichHandler.scanHumans(checkpoint, 0)
-        driveTrain.turnAngle(RobotContainer.TURN_SPEED, 180)
+        # driveTrain.turnAngle(RobotContainer.TURN_SPEED, 180)
         driveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.LINE, 22)
         driveTrain.turnAngle(RobotContainer.TURN_SPEED, -90 * (-1) ** checkpoint)
     elif action[0] == 6:

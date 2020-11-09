@@ -37,17 +37,21 @@ class DeichHandler:
         self.baghandler.pickUp(checkPoint)
     
     def scanHumans(self,checkPoint, angle):
-        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**checkPoint, self.rc.LINE)
-        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE,8)
-        self.DriveTrain.driveForward(self.rc.SPEED, 11.5)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 4)
+        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1), self.rc.LINE)
+        # self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE,8)
+        self.DriveTrain.driveForward(self.rc.SPEED, -48)
+        # self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 4)
+        
+        # yellow = [32, 11, 9]
+        # red = [51, 1, 1]
+        # c_color = self.Gripper.RomerColor(red ,yellow, [0, 0, 1], "Red", "Yellow", "None")
+        # if(c_color == "None"):
+        #     self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 1)
+        #     c_color = self.Gripper.RomerColor(red, yellow, [0, 0, 1], "Red", "Yellow", "None")
+        c_color = self.Gripper2.RomerColorPD()
         sleep(0.5)
-        yellow = [32, 11, 9]
-        red = [51, 1, 1]
-        c_color = self.Gripper.RomerColor(red ,yellow, [0, 0, 1], "Red", "Yellow", "None")
-        if(c_color == "None"):
-            self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 1)
-            c_color = self.Gripper.RomerColor(red, yellow, [0, 0, 1], "Red", "Yellow", "None")
+        self.DriveTrain.driveForward(self.rc.SPEED, 24)
+
         log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
         log(c_color, "Color of the front sensor")
         Gameboard.setHuman(checkPoint, c_color)
@@ -56,9 +60,9 @@ class DeichHandler:
     def scanBlocks(self, checkPoint):
         männli = Gameboard.humans
         if checkPoint == 0 or checkPoint == 2:
-            angle = -90
-        else:
             angle = 90
+        else:
+            angle = -90
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         self.DriveTrain.driveForward(self.rc.SPEED, 17)
         sleep(0.5)
