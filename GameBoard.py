@@ -247,6 +247,7 @@ class Gameboard:
                 return [7, min(distances)]
             
             if len(todoBlocks) > 0:
+                print("TodoBlocks:   " + str(todoBlocks))
                 distances = [3, 3, 3, 3]
                 for i in range(len(todoBlocks)):
                     distances[todoBlocks[i]] = Gameboard.getDistance(checkpoint, todoBlocks[0])

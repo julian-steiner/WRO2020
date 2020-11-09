@@ -24,6 +24,9 @@ orderHandler = OrderHandling(driveTrain, gripper)
 #     print("Color of the front sensor:   " + str(Motors.Gripper1.colorSensor.rgb))
 #     print("Color of the back sensor:    " + str(Motors.Gripper2.colorSensor.rgb))
 #     input("")
+
+
+
 checkpoint = 0
 offset = 0
 driveTrain.driveCheckpoints(6, 0, offset, 0)

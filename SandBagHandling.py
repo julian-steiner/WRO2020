@@ -14,7 +14,7 @@ class BagHandler:
     def scanBags(self, startPoint, offset):
         houseColors = Gameboard.houses
 
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED * (-1) ** (startPoint), 160)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED * (-1) ** (startPoint), 150)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
         sleep(0.2)
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
@@ -36,7 +36,7 @@ class BagHandler:
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
         sleep(0.2)
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
-        self.DriveTrain.center("Black", direction=1 * (-1) ** startPoint)
+        self.DriveTrain.center("Black", direction = 1 * (-1) ** startPoint)
         self.Gripper.lowerMotor(-40)
         self.DriveTrain.driveForward(self.rc.SPEED, 13)
         self.Gripper.moveMotor(10, 150)

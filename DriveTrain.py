@@ -92,6 +92,7 @@ class DriveTrain:
 
     def center(self, color, direction = 1):
         speed = 5
+        print("Direction:   " + str(direction))
         if(direction == 1):
             while Motors.DriveTrain.driveColorLeft.color_name != color:
                 self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
