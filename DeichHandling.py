@@ -55,7 +55,7 @@ class DeichHandler:
         log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
         log(c_color, "Color of the front sensor")
         Gameboard.setHuman(checkPoint, c_color)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -33)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -10)
 
     def scanBlocks(self, checkPoint):
         männli = Gameboard.humans
@@ -63,8 +63,9 @@ class DeichHandler:
             angle = 90
         else:
             angle = -90
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
-        self.DriveTrain.driveForward(self.rc.SPEED, 17)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
+        self.DriveTrain.driveForward(self.rc.SPEED, 14)
+        self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 5)
         sleep(0.5)
         self.DriveTrain.driveForward(self.rc.SPEED,-95)
         if checkPoint % 2 == 1:

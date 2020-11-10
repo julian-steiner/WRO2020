@@ -43,7 +43,7 @@ class BagHandler:
         RobotContainer.setLoaded(Gameboard.sand[startPoint], 0)
 
         if driveBack == "1":
-            self.DriveTrain.driveForward(self.rc.SPEED, -24)
+            self.DriveTrain.driveForward(self.rc.SPEED, -22)
             self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 90*(-1)**startPoint)
         elif driveBack != "1":
             self.DriveTrain.driveForward(self.rc.SPEED, 2)

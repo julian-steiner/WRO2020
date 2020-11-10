@@ -27,7 +27,7 @@ orderHandler = OrderHandling(driveTrain, gripper)
 
 checkpoint = 0
 offset = 0
-driveTrain.driveCheckpoints(6, 0, offset, 0)
+driveTrain.driveCheckpoints(6, 0, offset, 0, '11')
 
 while checkpoint != 6:
     action = Gameboard.calculateMove(checkpoint)
@@ -35,8 +35,7 @@ while checkpoint != 6:
     print("Offset:  " + str(offset))
     print("Checkpoint:  "  + str(checkpoint))
     if action[0] == 0:
-        orderHandler.deliverOrder(checkpoint)
-        offset = 0  
+        Gameboard.setOrderDelivered(action[1])
     elif action[0] == 1:
         print(RobotContainer.getLoaded())
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)

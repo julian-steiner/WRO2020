@@ -15,10 +15,16 @@ class OrderHandling:
         self.driveTrain.driveForward(RobotContainer.SLOW_SPEED, -4)
         Gameboard.setOrderDelivered(checkpoint)
 
+    def scannhouse(self, checkpoint):
+        if(len(Gameboard.deliveredOrders) <= 1):
+            self.scannhouse1(checkpoint)
+        else:
+            self.scannhouse2(checkpoint)
+
     def scannhouse1(self,chekpoint):
         self.driveTrain.driveForward(15,4.5)
         time.sleep(0.1)
-        c_color = Gripper.RomerColor(self,[13, 47, 72] ,[5, 33, 8], [1, 1, 0], "Blue", "Green", "None")
+        c_color = Gripper.RomerColor(self,[13, 47, 72] ,[12, 7, 17], [1, 1, 0], "Blue", "Green", "None")
         print(c_color)
         time.sleep(0.1)
         Gameboard.setHouse(chekpoint,c_color)

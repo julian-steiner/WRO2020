@@ -288,7 +288,7 @@ class DriveTrain:
                 self.driveForward(self.rc.SPEED, 100)
 
         if point1 == 6:
-            self.driveForward(self.rc.SPEED, 27)
+            self.driveForward(self.rc.SPEED, 25)
             self.turnAngle(self.rc.TURN_SPEED, -90)
             self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
             self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
