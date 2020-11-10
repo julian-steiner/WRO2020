@@ -244,14 +244,16 @@ class Gameboard:
                 distances = [3, 3, 3, 3]
                 for i in range(len(todoBags)):
                     distances[todoBags[i]] = Gameboard.getDistance(checkpoint, todoBags[0])
-                return [7, min(distances)]
+                if distances.count(3) != 4:
+                    return [7, min(distances)]
             
             if len(todoBlocks) > 0:
                 print("TodoBlocks:   " + str(todoBlocks))
                 distances = [3, 3, 3, 3]
                 for i in range(len(todoBlocks)):
                     distances[todoBlocks[i]] = Gameboard.getDistance(checkpoint, todoBlocks[0])
-                return [8, min(distances)]
+                if distances.count(3) != 4:
+                    return [8, min(distances)]
 
         #check to scan a worst case szenario
         if(houses.count(0) == 0):
