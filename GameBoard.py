@@ -167,8 +167,8 @@ class Gameboard:
         #     return [3, checkpoint]
         
         #check if robot has to deliver the EvacuationOrder
-        if houses[checkpoint] not in ["None", 0] and checkpoint not in deliveredOrders:
-            return [0, checkpoint]
+        # if houses[checkpoint] not in ["None", 0] and checkpoint not in deliveredOrders:
+            # return [0, checkpoint]
         
         #check if robot is loaded
         if loaded_bag != None:

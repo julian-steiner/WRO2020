@@ -17,8 +17,8 @@ class BagHandler:
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED * (-1) ** (startPoint), 150)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(startPoint), self.rc.LINE)
         sleep(0.2)
-        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
-        self.DriveTrain.driveForward(self.rc.SPEED, 12)
+        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 8)
+        self.DriveTrain.driveForward(self.rc.SPEED, 9)
         
         color = self.Gripper.RomerColor([16, 33, 31] ,[20, 20, 67], [0, 0, 1], "Green", "Blue", "None")
         print(Motors.Gripper1.colorSensor.rgb)

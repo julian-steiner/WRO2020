@@ -64,8 +64,7 @@ class DeichHandler:
         else:
             angle = -90
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
-        self.DriveTrain.driveForward(self.rc.SPEED, 14)
-        self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 5)
+        self.DriveTrain.driveForward(self.rc.SPEED, 17)
         sleep(0.5)
         self.DriveTrain.driveForward(self.rc.SPEED,-95)
         if checkPoint % 2 == 1:
@@ -93,7 +92,7 @@ class DeichHandler:
         print(90*(-1)**(checkPointz))
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 60*(-1)**(checkPointz))
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPointz), self.rc.LINE)
-        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,20)
+        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,18)
         if checkPointz in [0, 2]:
             offset = -90
         else:
@@ -123,7 +122,7 @@ class DeichHandler:
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         sleep(0.5)
 # Drive to the blocks
-        self.DriveTrain.driveForward(self.rc.SPEED, 17)
+        self.DriveTrain.driveForward(50, 20)
         self.DriveTrain.driveForward(self.rc.SPEED,-95)
 
         if checkPoint % 2 == 1:
