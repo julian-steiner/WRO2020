@@ -48,7 +48,7 @@ while checkpoint != 6:
     elif action[0] == 2:
         print(RobotContainer.getLoaded())
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
-        checkpoint = action[1]
+        checkpoint = action[1]        
         deichHandler.DeichPutDown(checkpoint)
         offset = 180
     elif action[0] == 3:
