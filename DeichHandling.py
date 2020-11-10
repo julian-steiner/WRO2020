@@ -37,25 +37,25 @@ class DeichHandler:
         self.baghandler.pickUp(checkPoint)
     
     def scanHumans(self,checkPoint, angle):
-        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1), self.rc.LINE)
-        # self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE,8)
-        self.DriveTrain.driveForward(self.rc.SPEED, -48)
-        # self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 4)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,90*(-1)**(checkPoint))
+        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE,8)
+        # self.DriveTrain.driveForward(self.rc.SPEED, -48)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 25)
         
-        # yellow = [32, 11, 9]
-        # red = [51, 1, 1]
-        # c_color = self.Gripper.RomerColor(red ,yellow, [0, 0, 1], "Red", "Yellow", "None")
-        # if(c_color == "None"):
-        #     self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 1)
-        #     c_color = self.Gripper.RomerColor(red, yellow, [0, 0, 1], "Red", "Yellow", "None")
-        c_color = self.Gripper2.RomerColorPD()
+        yellow = [32, 11, 9]
+        red = [51, 1, 1]
+        c_color = self.Gripper.RomerColor(red ,yellow, [0, 0, 1], "Red", "Yellow", "None")
+        if(c_color == "None"):
+            self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 1)
+            c_color = self.Gripper.RomerColor(red, yellow, [0, 0, 1], "Red", "Yellow", "None")
+        # c_color = self.Gripper2.RomerColorPD()
         sleep(0.5)
-        self.DriveTrain.driveForward(self.rc.SPEED, 24)
+        # self.DriveTrain.driveForward(self.rc.SPEED, 24)
 
         log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
         log(c_color, "Color of the front sensor")
         Gameboard.setHuman(checkPoint, c_color)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -4)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -33)
 
     def scanBlocks(self, checkPoint):
         männli = Gameboard.humans
