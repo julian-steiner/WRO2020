@@ -38,7 +38,6 @@ class Gripper:
         differences = [0, 0, 0]
         for i in range(10):
             c1 = Motors.Gripper1.colorSensor.rgb
-            print(c1)
             c = [color1, color2, color3]
             # 0 = blue, 1 = green, 2 = no color
             diff1 = []

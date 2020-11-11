@@ -20,30 +20,28 @@ deichHandler = DeichHandler(gripper, gripper2, driveTrain, bagHandler)
 orderHandler = OrderHandling(driveTrain, gripper)
 
 
-# while True:
-#     print("Color of the front sensor:   " + str(Motors.Gripper1.colorSensor.rgb))
-#     print("Color of the back sensor:    " + str(Motors.Gripper2.colorSensor.rgb))
-#     input("")
 
 checkpoint = 0
 offset = 0
 driveTrain.driveCheckpoints(6, 0, offset, 0, '11')
 
+# checkpoint = 2
+# offset = 0
+# driveTrain.driveCheckpoints(6, 2, offset, 0, '11')
+
 while checkpoint != 6:
     action = Gameboard.calculateMove(checkpoint)
-    print("Action:  " + str(action))
-    print("Offset:  " + str(offset))
-    print("Checkpoint:  "  + str(checkpoint))
+    print("[Main]   Action:  " + str(action))
+    print("[Main]   Offset:  " + str(offset))
+    print("[Main]   Checkpoint:  "  + str(checkpoint))
     if action[0] == 0:
         Gameboard.setOrderDelivered(action[1])
     elif action[0] == 1:
-        print(RobotContainer.getLoaded())
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
         checkpoint = action[1]
         offset = 0
         bagHandler.deliver(checkpoint, 0)
     elif action[0] == 2:
-        print(RobotContainer.getLoaded())
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
         checkpoint = action[1]        
         deichHandler.DeichPutDown(checkpoint)
@@ -52,16 +50,16 @@ while checkpoint != 6:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
         checkpoint = action[1]
         orderHandler.scannhouse(checkpoint)
-        print(Gameboard.houses)
         offset = 0
     elif action[0] == 4:
         deichHandler.scanHumans(checkpoint, 0)
         checkpoint = deichHandler.scanBlocks(checkpoint)
-        offset = 0
+        offset = 180
     elif action[0] == 5:
         deichHandler.scanHumans(checkpoint, 0)
         # driveTrain.turnAngle(RobotContainer.TURN_SPEED, 180)
-        driveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.LINE, 22)
+        # driveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.LINE, 22)
+        driveTrain.driveForward(RobotContainer.SPEED, -22)
         driveTrain.turnAngle(RobotContainer.TURN_SPEED, -90 * (-1) ** checkpoint)
     elif action[0] == 6:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
@@ -79,6 +77,8 @@ while checkpoint != 6:
         deichHandler.DeichPickUp(checkpoint)
         offset = 180
     elif action[0] == 9:
+        driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
+        checkpoint = action[1]
         checkpoint = deichHandler.männliDriver(checkpoint)
         offset = 180
     elif action[0] == 10:

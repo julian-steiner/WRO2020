@@ -26,8 +26,7 @@ class Gripper2:
                 return "None"
 
         c2 = Motors.Gripper2.colorSensor.rgb
-        c = [[51, 1, 4], [44, 9, 3], [40, 20, 25]]
-        print(c2)
+        c = [[51, 1, 4], [44, 9, 3], [26, 10, 14]]
         diff2 = []
         for i in range(len(c)):
             v2 = 0
@@ -46,7 +45,6 @@ class Gripper2:
 
         for i in range(10):
             c2 = Motors.Gripper2.colorSensor.rgb
-            print(c2)
             c = [[150, 15, 5], [175, 74, 10]]
             diff2 = []
             for i in range(len(c)):

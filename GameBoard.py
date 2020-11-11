@@ -10,12 +10,14 @@ class Gameboard:
     sand = [0, 0, 0, 0]
     bricks = [0, 0, 0, 0]
     humans = [0, 0, 0, 0]
+    house_p = 5
     deliveredBlocks = []
     deliveredBags = []
     deliveredOrders = []
     bricksArranged = []
     stage = 0
     rc = rc.RobotContainer()
+
     
     @staticmethod
     def update():
@@ -30,7 +32,8 @@ class Gameboard:
         
         if(Gameboard.humans.count("Yellow") + Gameboard.humans.count("Red") == 2 and Gameboard.houses.count(0) != 0):
             for i in range(Gameboard.bricks.count(0)):
-                Gameboard.bricks[Gameboard.bricks.index(0)] = "None"
+                if(Gameboard.humans[i] == "None"):
+                    Gameboard.bricks[Gameboard.bricks.index(0)] = "None"
 
         if(Gameboard.sand.count("Green") + Gameboard.sand.count("Blue") == 2 and Gameboard.sand.count(0) != 0):
             for i in range(Gameboard.sand.count(0)):
@@ -54,6 +57,16 @@ class Gameboard:
             for i in range(4):
                 if(Gameboard.houses[i] in ["None"] or Gameboard.bricks[i] in ["Yellow", "Red"]):
                     Gameboard.humans[i] = "None"
+
+        #Autofill HousePositions
+        for i in range(4):
+            if(Gameboard.houses[i]in ["Blue", "Green"]):
+                Gameboard.house_positions.append(i)
+
+        #Predict House
+        for i in range(4):
+            if(Gameboard.humans[i] not in ["None", 0] and Gameboard.houses[i] == 0):
+                Gameboard.house_p = i
 
         #Autofill colors
 
@@ -103,6 +116,12 @@ class Gameboard:
 
     @staticmethod
     def setHouse(position, color):
+        if(color != "None" and Gameboard.house_c != ""):
+            if Gameboard.house_c == "Blue":
+                color = "Green"
+            else:
+                color = "Blue"
+            
         Gameboard.houses[position] = color
         if color != "None":
             Gameboard.house_c = color
@@ -158,9 +177,12 @@ class Gameboard:
         humans = Gameboard.humans
         deliveredBags = Gameboard.deliveredBags
         deliveredBlocks = Gameboard.deliveredBlocks
-        deliveredOrders = Gameboard.deliveredOrders
         bagDistance = 3
         brickDistance = 3
+        print(bags)
+        print(bricks)
+        print(houses)
+        print(humans)
 
         # #check if robot has to scan the house
         # if houses[checkpoint] == 0:
@@ -178,10 +200,10 @@ class Gameboard:
 
         #return which item to put down
         if bagDistance != 3 or brickDistance != 3:
-            if bagDistance <= brickDistance:
-                return [1, houses.index(loaded_bag)]
-            else:
+            if bagDistance > brickDistance:
                 return [2, humans.index(loaded_brick)]
+            else:
+                return [1, houses.index(loaded_bag)]
 
         m_possibilities = []
         #check for scanning
@@ -216,7 +238,6 @@ class Gameboard:
             todoBlocks = []
             mWithout_possibilities = []
             mPickup_possibilities = []
-            print("Bricks at the position: " + str(bricks))
             for i in range(4):
                 if bags[i] in ["Green", "Blue"] and bags[i] not in deliveredBags and bags[i] in houses:
                     todoBags.append(i)
@@ -236,9 +257,15 @@ class Gameboard:
 
             for possibility in mPickup_possibilities:
                     for house in house_positions:
-                        print("Distance" + str(Gameboard.getDistance(house, possibility)))
                         if Gameboard.getDistance(house, possibility):
                             return [10, possibility]
+            
+            if len(todoBlocks) > 0:
+                distances = [3, 3, 3, 3]
+                for i in range(len(todoBlocks)):
+                    distances[todoBlocks[i]] = Gameboard.getDistance(checkpoint, todoBlocks[0])
+                if distances.count(3) != 4:
+                    return [8, min(distances)]
 
             if len(todoBags) > 0:
                 distances = [3, 3, 3, 3]
@@ -247,14 +274,6 @@ class Gameboard:
                 if distances.count(3) != 4:
                     return [7, min(distances)]
             
-            if len(todoBlocks) > 0:
-                print("TodoBlocks:   " + str(todoBlocks))
-                distances = [3, 3, 3, 3]
-                for i in range(len(todoBlocks)):
-                    distances[todoBlocks[i]] = Gameboard.getDistance(checkpoint, todoBlocks[0])
-                if distances.count(3) != 4:
-                    return [8, min(distances)]
-
         #check to scan a worst case szenario
         if(houses.count(0) == 0):
             for possibility in m_possibilities:
