@@ -87,7 +87,7 @@ class DeichHandler:
 
     def driveToPoint(self, checkPointz):
         sleep(0.5)
-        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,6)
+        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,7)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 60*(-1)**(checkPointz))
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPointz), self.rc.LINE)
         self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,18)
@@ -231,7 +231,7 @@ class DeichHandler:
         # self.DriveTrain.center("Black")
         sleep(0.2)
         self.DriveTrain.driveForward(self.rc.SPEED,-26.5)
-        self.Gripper.moveMotor(100,-210)
+        self.Gripper.moveMotor(60,-180)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*140)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint),"Black")
         # self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*130)
@@ -245,7 +245,7 @@ class DeichHandler:
         Gameboard.setBrick(checkPoint,c_color)
 # Drehen
         self.DriveTrain.driveForward(self.rc.SPEED,23)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint)*179)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint)*180)
 # Seite wechslen
         self.DriveTrain.driveForward(self.rc.SPEED,-85)
         if checkPoint % 2 == 1:
