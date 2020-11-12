@@ -252,7 +252,9 @@ class Gameboard:
             for i in range(4):
                 if i in todoBags and i in todoBlocks:
                     mPickup_possibilities.append(i)
-
+            
+            print("Gameboard bricks arranged:   " + str(Gameboard.bricksArranged))
+            print("driverPossibilities: " + str(mWithout_possibilities))
             for possibility in mWithout_possibilities:
                     for house in house_positions:
                         if Gameboard.getDistance(house, possibility) == 1:

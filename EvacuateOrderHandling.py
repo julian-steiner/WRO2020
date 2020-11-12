@@ -37,7 +37,7 @@ class OrderHandling:
         time.sleep(0.1)
     
     def scannhouse2(self,chekpoint):
-        self.driveTrain.driveForward(50,4)
+        self.driveTrain.driveForward(50,3)
         time.sleep(0.1)
         print(Gameboard.house_p)
 

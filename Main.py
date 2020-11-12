@@ -19,13 +19,22 @@ bagHandler = BagHandler(driveTrain, gripper)
 deichHandler = DeichHandler(gripper, gripper2, driveTrain, bagHandler)
 orderHandler = OrderHandling(driveTrain, gripper)
 
-# checkpoint = 0
-# offset = 0
-# driveTrain.driveCheckpoints(6, 0, offset, 0, '11')
-
-checkpoint = 3
+checkpoint = 0
 offset = 0
-driveTrain.driveCheckpoints(6, 3, offset, 0, '11')
+driveTrain.driveCheckpoints(6, 0, offset, 0, '11')
+
+# checkpoint = 3
+# offset = 0
+# driveTrain.driveCheckpoints(6, 3, offset, 0, '11')
+Motors.Gripper1.colorSensor.rgb
+Motors.Gripper2.colorSensor.rgb
+Gameboard.setHouse(1, "Blue")
+Gameboard.setHouse(3, "Green")
+Gameboard.setHuman(1, "Yellow")
+Gameboard.setHuman(3, "Red")
+Gameboard.setBrick(0, "Yellow")
+Gameboard.bricksArranged = []
+Gameboard.setSand(0, "Green")
 
 while checkpoint != 6:
     action = Gameboard.calculateMove(checkpoint)
