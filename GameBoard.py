@@ -231,8 +231,7 @@ class Gameboard:
                 if(houses[i] == 0):
                     positions.append(i)
                     distances[i] = Gameboard.getDistance(checkpoint,i)
-            if 3 in positions and 2 in positions and 0 not in positions and 1 not in positions:
-                return 3, 3
+
             if len(positions) != 0:
                 return 3, distances.index(min(distances))
 

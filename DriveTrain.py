@@ -160,7 +160,7 @@ class DriveTrain:
         return angle  
     
     def driveCheckpoints(self, point1, point2, s_offset, e_offset, end_distance = '12'): 
-        long_distance = 125
+        long_distance = 128
         end_distance = float(end_distance)
         if point1 == point2:
             self.turnAngle(self.rc.TURN_SPEED, e_offset - s_offset)
@@ -288,7 +288,13 @@ class DriveTrain:
                 self.driveForward(self.rc.SPEED, 100)
 
         if point1 == 6:
-            self.driveForward(self.rc.SPEED, 25)
-            self.turnAngle(self.rc.TURN_SPEED, -90)
-            self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
-            self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+            if point2 == 0:
+                self.driveForward(self.rc.SPEED, 25)
+                self.turnAngle(self.rc.TURN_SPEED, -90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
+            elif point2 == 3:
+                self.driveForward(self.rc.SPEED, 25)
+                self.turnAngle(self.rc.TURN_SPEED, 90)
+                self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, ["Yellow"], self.rc.LINE)
+                self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, ["Red"], end_distance)

@@ -19,15 +19,13 @@ bagHandler = BagHandler(driveTrain, gripper)
 deichHandler = DeichHandler(gripper, gripper2, driveTrain, bagHandler)
 orderHandler = OrderHandling(driveTrain, gripper)
 
-
-
-checkpoint = 0
-offset = 0
-driveTrain.driveCheckpoints(6, 0, offset, 0, '11')
-
-# checkpoint = 2
+# checkpoint = 0
 # offset = 0
-# driveTrain.driveCheckpoints(6, 2, offset, 0, '11')
+# driveTrain.driveCheckpoints(6, 0, offset, 0, '11')
+
+checkpoint = 3
+offset = 0
+driveTrain.driveCheckpoints(6, 3, offset, 0, '11')
 
 while checkpoint != 6:
     action = Gameboard.calculateMove(checkpoint)

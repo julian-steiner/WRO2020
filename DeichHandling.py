@@ -43,8 +43,8 @@ class DeichHandler:
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 25)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -3)
         
-        yellow = [32, 11, 9]
-        red = [17, 9, 10]
+        yellow = [19, 9, 12]
+        red = [25, 3, 4]
         c_color = self.Gripper.RomerColor(red ,yellow, [0, 0, 1], "Red", "Yellow", "None")
         log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
         log(c_color, "Color of the front sensor")
@@ -132,7 +132,7 @@ class DeichHandler:
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
         sleep(0.5)
 # Drive to the blocks
-        self.DriveTrain.driveForward(50, 20)
+        self.DriveTrain.driveForward(60, 25)
         self.DriveTrain.driveForward(self.rc.SPEED,-95)
 
         if checkPoint % 2 == 1:
@@ -193,7 +193,7 @@ class DeichHandler:
                 else:
                     angle = -90
                 
-                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -3)
+                self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 3)
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
                 # self.DriveTrain.driveForward(self.rc.SPEED, 57)
                 self.DriveTrain.driveForward(self.rc.SPEED, 20)
@@ -204,7 +204,7 @@ class DeichHandler:
                 sleep(0.5)
                 self.DriveTrain.driveForward(self.rc.SPEED, 2)
                 self.DriveTrain.center("Black", direction='-1')
-                self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 29)
+                self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 28)
                 destination = Gameboard.humans.index(color)
                 RobotContainer.setLoaded(0, None)
                 Gameboard.setBlockDelivered(color)
