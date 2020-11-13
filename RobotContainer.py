@@ -6,7 +6,7 @@ LOADED_BLOCKS = None
 
 class RobotContainer:
     WHEEL_DIAMETER = 5.5
-    WHEEL_DISTANCE = 8.28
+    WHEEL_DISTANCE = 8.6
     # WHEEL_DISTANCE = 8.3
     SPEED = 50
     FAST_SPEED = 60

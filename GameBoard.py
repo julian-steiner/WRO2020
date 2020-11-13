@@ -194,13 +194,15 @@ class Gameboard:
         
         #check if robot is loaded
         if loaded_bag != None:
-            bagDistance = Gameboard.getDistance(checkpoint, houses.index(loaded_bag))
+            if loaded_bag in houses:
+                bagDistance = Gameboard.getDistance(checkpoint, houses.index(loaded_bag))
         if loaded_brick != None:
-            brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
+            if loaded_brick in humans:
+                brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
 
         #return which item to put down
         if bagDistance != 3 or brickDistance != 3:
-            if bagDistance > brickDistance:
+            if brickDistance <= bagDistance:
                 return [2, humans.index(loaded_brick)]
             else:
                 return [1, houses.index(loaded_bag)]
@@ -253,17 +255,27 @@ class Gameboard:
                 if i in todoBags and i in todoBlocks:
                     mPickup_possibilities.append(i)
             
-            print("Gameboard bricks arranged:   " + str(Gameboard.bricksArranged))
-            print("driverPossibilities: " + str(mWithout_possibilities))
             for possibility in mWithout_possibilities:
                     for house in house_positions:
                         if Gameboard.getDistance(house, possibility) == 1:
                             return [9, house]
+                        
+                        
+            #check to scan a worst case szenario
+            print("Houses" + str(houses.count(0)))
+            print("possibilities " + str(mWithout_possibilities))
+            if(houses.count(0) == 0):
+                for possibility in mWithout_possibilities:
+                    for house in house_positions:
+                        print("Checked worst case")
+                        if Gameboard.getDistance(house, possibility) == 2:
+                            return [6, possibility]
 
             for possibility in mPickup_possibilities:
                     for house in house_positions:
                         if Gameboard.getDistance(house, possibility):
                             return [10, possibility]
+
             
             if len(todoBlocks) > 0:
                 distances = [3, 3, 3, 3]
@@ -279,12 +291,5 @@ class Gameboard:
                 if distances.count(3) != 4:
                     return [7, min(distances)]
             
-        #check to scan a worst case szenario
-        if(houses.count(0) == 0):
-            for possibility in m_possibilities:
-                for house in house_positions:
-                    if Gameboard.getDistance(house, possibility) == 2:
-                        return [6, possibility]
-        
         #return to drive to r6
         return [11, 6]
