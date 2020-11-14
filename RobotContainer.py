@@ -6,12 +6,12 @@ LOADED_BLOCKS = None
 
 class RobotContainer:
     WHEEL_DIAMETER = 5.5
-    WHEEL_DISTANCE = 8.6
+    WHEEL_DISTANCE = 8.4
     # WHEEL_DISTANCE = 8.3
     SPEED = 50
     FAST_SPEED = 60
     SLOW_SPEED = 30
-    AGGRESSION = 7
+    AGGRESSION = 8
     LOW_AGGRESSION = 4
     APPROACH_SPEED = 20
     TURN_SPEED = 20
@@ -19,7 +19,7 @@ class RobotContainer:
     LINE = ["Black"]
     BLUELINE = ["Blue", "Green"]
     REDLINE = ["Red", "Yellow"]
-    LOADED_FACTOR = 1.02
+    LOADED_FACTOR = 1.0
     @staticmethod 
     def setLoaded(bags, blocks):
         global LOADED_BLOCKS, LOADED_BAGS

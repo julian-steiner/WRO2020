@@ -12,6 +12,7 @@ from Motors import Motors
 import time
 from ev3dev2 import power
 
+
 gripper = Gripper()
 gripper2 = Gripper2()
 driveTrain = DriveTrain()
@@ -19,32 +20,33 @@ bagHandler = BagHandler(driveTrain, gripper)
 deichHandler = DeichHandler(gripper, gripper2, driveTrain, bagHandler)
 orderHandler = OrderHandling(driveTrain, gripper)
 
-driveTrain.driveCheckpoints("R6", 0, 0, 0, '11')
+# driveTrain.turnToHouse(1)
 
-checkpoint = 0
+
+driveTrain.driveCheckpoints("R2", 2, 0, 0, '11')
+
+checkpoint = 2
 offset = 0
 
-# checkpoint = 3
-# offset = 0
-# driveTrain.driveCheckpoints("R6", 3, offset, 0, '11')
 Motors.Gripper1.colorSensor.rgb
 Motors.Gripper2.colorSensor.rgb
-Gameboard.setHouse(2, "Blue")
-Gameboard.setHouse(3, "Green")
-Gameboard.setBrick(0, "Yellow")
-Gameboard.setBrick(1, "Red")
-Gameboard.setSand(1, "Blue")
-Gameboard.setSand(0, "Green")
-Gameboard.humans = [0, 0, "Red", "Yellow"]
+Gameboard.setHouse(0, "Blue")
+Gameboard.setHouse(1, "Green")
+Gameboard.setBrick(2, "Yellow")
+Gameboard.setBrick(3, "Red")
+Gameboard.setSand(2, "Blue")
+Gameboard.setSand(3, "Green")
+Gameboard.setHuman(0, "Red")
+Gameboard.setHuman(1, "Yellow")
 Gameboard.bricksArranged = []
 
-while checkpoint != 6:
+while checkpoint not in ["R1", "R2", "R3", "R4", "R5", "R6"]:
     action = Gameboard.calculateMove(checkpoint)
     print("[Main]   Action:  " + str(action))
     print("[Main]   Offset:  " + str(offset))
     print("[Main]   Checkpoint:  "  + str(checkpoint))
     if action[0] == 0:
-        Gameboard.setOrderDelivered(action[1])
+        Gameboard.setOrderDelivered(checkpoint)
     elif action[0] == 1:
         if(Gameboard.houses[checkpoint] != RobotContainer.getLoaded()[1]):
             driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
@@ -53,9 +55,9 @@ while checkpoint != 6:
         else:
             if offset == 180:
                 print("Offset is 180")
-                driveTrain.driveForward(RobotContainer.SPEED, 5)
+                driveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.BLUELINE + RobotContainer.REDLINE, 5)
                 driveTrain.turnAngle(RobotContainer.TURN_SPEED, 180)
-                driveTrain.driveForward(RobotContainer.SLOW_SPEED, 3)
+                driveTrain.followLine(RobotContainer.SLOW_SPEED, RobotContainer.AGGRESSION, RobotContainer.BLUELINE + RobotContainer.REDLINE, 3)
         checkpoint = action[1]
         offset = 180
         bagHandler.deliver(checkpoint, 0)
@@ -77,8 +79,6 @@ while checkpoint != 6:
         offset = 180
     elif action[0] == 5:
         deichHandler.scanHumans(checkpoint, 0)
-        # driveTrain.turnAngle(RobotContainer.TURN_SPEED, 180)
-        # driveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.LINE, 22)
         driveTrain.driveForward(RobotContainer.SPEED, -22)
         driveTrain.turnAngle(RobotContainer.TURN_SPEED, -90 * (-1) ** checkpoint)
     elif action[0] == 6:

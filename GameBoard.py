@@ -183,14 +183,6 @@ class Gameboard:
         print(bricks)
         print(houses)
         print(humans)
-
-        # #check if robot has to scan the house
-        # if houses[checkpoint] == 0:
-        #     return [3, checkpoint]
-        
-        #check if robot has to deliver the EvacuationOrder
-        # if houses[checkpoint] not in ["None", 0] and checkpoint not in deliveredOrders:
-            # return [0, checkpoint]
         
         #check if robot is loaded
         if loaded_bag != None:
@@ -199,6 +191,9 @@ class Gameboard:
         if loaded_brick != None:
             if loaded_brick in humans:
                 brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
+        
+        if houses[checkpoint] not in [None, "None", 0] and checkpoint not in Gameboard.deliveredOrders:
+            return [0, checkpoint]
 
         #return which item to put down
         if bagDistance != 3 or brickDistance != 3:
@@ -262,14 +257,14 @@ class Gameboard:
                         
                         
             #check to scan a worst case szenario
-            print("Houses" + str(houses.count(0)))
-            print("possibilities " + str(mWithout_possibilities))
-            if(houses.count(0) == 0):
-                for possibility in mWithout_possibilities:
-                    for house in house_positions:
-                        print("Checked worst case")
-                        if Gameboard.getDistance(house, possibility) == 2:
-                            return [6, possibility]
+            # print("Houses" + str(houses.count(0)))
+            # print("possibilities " + str(mWithout_possibilities))
+            # if(houses.count(0) == 0):
+            #     for possibility in mWithout_possibilities:
+            #         for house in house_positions:
+            #             print("Checked worst case")
+            #             if Gameboard.getDistance(house, possibility) == 2:
+            #                 return [6, possibility]
 
             for possibility in mPickup_possibilities:
                     for house in house_positions:
