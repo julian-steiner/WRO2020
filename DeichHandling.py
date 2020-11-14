@@ -32,6 +32,31 @@ class DeichHandler:
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 18)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, e_offset - angle)
     
+    # def DeichPickUp(self, checkPoint, s_offset = 0, s_position = "checkpoint", e_offset = 180, scan = True):
+    #     #setValues
+    #     angle_coefficient = -1**(checkPoint+1)
+    #     angle = angle_coefficient * 90 - s_offset
+    #     #case if the robot starts at the checkpoint
+    #     if s_position == "checkpoint":
+    #         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
+    #         self.DriveTrain.driveForward(self.rc.SPEED, -24)
+    #         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, angle)
+    #         self.DriveTrain.driveForward(self.rc.SPEED, -14)
+    #         self.Gripper2.movemotor(100, True)
+    #         sleep(0.5)
+    #         RobotContainer.setLoaded(0, Gameboard.bricks[checkPoint])
+    #         self.DriveTrain.driveForward(self.rc.SPEED, 13)
+    #         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle)
+    #         self.DriveTrain.center("Black", direction=angle_coefficient)
+    #     #case if the robot starts at the turning point behind
+    #     else:
+    #         angle2 = 180 - s_offset
+    #         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -angle2)
+    #         self.DriveTrain.driveForward(self.rc.SPEED, -14)
+    #         self.Gripper2.movemotor(100, True)
+    #         sleep(0.5)
+            
+
     def pickUpBoth(self, checkPoint):
         self.DeichPickUp(checkPoint, 0)
         self.baghandler.pickUp(checkPoint)

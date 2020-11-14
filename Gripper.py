@@ -8,6 +8,7 @@ class Gripper:
         self.rc = rc.RobotContainer()
     
     def lowerMotor(self, speed):
+        #Moves the motor until it stops (positive = up)
         Motors.Gripper1.gripperMotor.on(speed, block=False)
         Motors.Gripper1.gripperMotor.wait_until_not_moving(400)
         Motors.Gripper1.gripperMotor.stop()
@@ -15,17 +16,17 @@ class Gripper:
     def moveMotor(self, speed, degrees):
         Motors.Gripper1.gripperMotor.on_for_degrees(speed, degrees)
 
-    def getColors(self):
-        values = []
+    def getColor(self):
+        #get the color
+        corr_factor = 1.4
         def getColor(color):
-            if(color[1] < color[2]):
+            if(color[1]*corr_factor <= color[2]):
                 return "Blue"
             else:
                 return "Green"
             return "No color"
-        values.append(getColor(Motors.Gripper1.colorSensor.rgb))
-        values.append(getColor(Motors.Gripper2.colorSensor.rgb))
-        return values
+
+        return getColor(Motors.Gripper1.colorSensor.rgb)
 
     def RomerColor(self, color1, color2, color3, colorname1, colorname2, colorname3):
         def convertColor(num):
