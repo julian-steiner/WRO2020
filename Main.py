@@ -22,10 +22,11 @@ orderHandler = OrderHandling(driveTrain, gripper)
 
 # driveTrain.turnToHouse(1)
 
+s_point = "R3"
 
-driveTrain.driveCheckpoints("R2", 2, 0, 0, '11')
+driveTrain.driveCheckpoints(s_point, 3, 0, 0, '11')
 
-checkpoint = 2
+checkpoint = 3
 offset = 0
 
 Motors.Gripper1.colorSensor.rgb
@@ -63,6 +64,7 @@ while checkpoint not in ["R1", "R2", "R3", "R4", "R5", "R6"]:
         bagHandler.deliver(checkpoint, 0)
     elif action[0] == 2:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
+        offset = -90
         checkpoint = action[1]        
         checkpoint, offset = deichHandler.DeichPutDown(checkpoint)
         offset = 180
@@ -102,11 +104,15 @@ while checkpoint not in ["R1", "R2", "R3", "R4", "R5", "R6"]:
         checkpoint = deichHandler.männliDriver(checkpoint)
         offset = 180
     elif action[0] == 10:
+        if action[1] == 2:
+            c_offset = 90
+        else:
+            c_offset = -90
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
+        offset = 0
         checkpoint = action[1]
-        deichHandler.pickUpBoth(checkpoint)
-        offset = 180
+        offset = deichHandler.pickUpBoth(checkpoint, s_offset_b=0)
     elif action[0] == 11:
-        driveTrain.driveCheckpoints(checkpoint, 6, offset, 0)
+        driveTrain.driveCheckpoints(checkpoint, "R5", offset, 0)
         checkpoint = 6
         offset = 0

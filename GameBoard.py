@@ -266,10 +266,16 @@ class Gameboard:
             #             if Gameboard.getDistance(house, possibility) == 2:
             #                 return [6, possibility]
 
-            for possibility in mPickup_possibilities:
-                    for house in house_positions:
-                        if Gameboard.getDistance(house, possibility):
-                            return [10, possibility]
+            # for possibility in mPickup_possibilities:
+            #         for house in house_positions:
+            #             if Gameboard.getDistance(house, possibility):
+            #                 return [10, possibility]
+            if len(mPickup_possibilities) > 0:
+                distances = [3, 3, 3, 3]
+                for i in range(4):
+                    if i in mPickup_possibilities:
+                        distances[i] = Gameboard.getDistance(checkpoint, i)
+                return [10, distances.index(min(distances))]
 
             
             if len(todoBlocks) > 0:
