@@ -64,7 +64,7 @@ class BagHandler:
         self.Gripper.lowerMotor(-48)
         self.Gripper.lowerMotor(70)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 5)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 6)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 8)
         Gameboard.setBagDelivered(RobotContainer.getLoaded()[1])
         RobotContainer.setLoaded(None, 0)
         self.DriveTrain.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, ["Red", "Yellow", "Blue", "Green"], 21)
