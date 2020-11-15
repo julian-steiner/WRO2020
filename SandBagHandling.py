@@ -41,29 +41,30 @@ class BagHandler:
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
         self.DriveTrain.center("Black", direction = 1 * (-1) ** startPoint)
         self.Gripper.lowerMotor(-40)
-        self.DriveTrain.driveForward(self.rc.SPEED, 13)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 20)
+        sleep(0.2)
+        self.DriveTrain.tank_drive.on(-self.rc.APPROACH_SPEED/2, -self.rc.APPROACH_SPEED/2)
         self.Gripper.moveMotor(10, 150)
+        self.DriveTrain.tank_drive.off()
         RobotContainer.setLoaded(Gameboard.sand[startPoint], 0)
 
         if driveBack == "1":
-            self.DriveTrain.driveForward(self.rc.SPEED, -22)
+            self.DriveTrain.driveForward(self.rc.SPEED, -18)
             self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 90*(-1)**startPoint)
-        elif driveBack != "1":
-            self.DriveTrain.driveForward(self.rc.SPEED, 2)
         
     def deliver(self, startPoint, offset):
         self.Gripper.moveMotor(20, 1)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -12)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 9)
-        self.Gripper.lowerMotor(-30)
+        self.Gripper.lowerMotor(-25)
         self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, -2)
         self.Gripper.moveMotor(10, 160)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -12)
-        self.Gripper.lowerMotor(-80)
+        self.Gripper.lowerMotor(-48)
         self.Gripper.lowerMotor(70)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 5)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 6)
         Gameboard.setBagDelivered(RobotContainer.getLoaded()[1])
         RobotContainer.setLoaded(None, 0)
-        # self.DriveTrain.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, ["Red", "Yellow", "Blue", "Green"], 2)
+        self.DriveTrain.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, ["Red", "Yellow", "Blue", "Green"], 21)
+        self.DriveTrain.driveForward(self.rc.SPEED,-2)
 

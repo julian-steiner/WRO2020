@@ -94,14 +94,14 @@ class DriveTrain:
                 self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
             while Motors.DriveTrain.driveColorRight.color_name != color:
                 self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
-            self.turnAngle(5,  -9)
+            self.turnAngle(5,  -10)
             self.tank_drive.off()
         else:
             while Motors.DriveTrain.driveColorRight.color_name != color:
                 self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
             while Motors.DriveTrain.driveColorLeft.color_name != color:
                 self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
-            self.turnAngle(5,  9)
+            self.turnAngle(5,  10)
             self.tank_drive.off()
 
     def getSensorStates(self, colors):

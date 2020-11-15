@@ -147,6 +147,8 @@ class DeichHandler:
         männli = Gameboard.humans
 
         #Drive to the turning point
+        self.DriveTrain.driveForward(self.rc.SPEED, 10)
+        self.DriveTrain.driveForward(self.rc.SPEED, -3)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint), self.rc.LINE)
         self.DriveTrain.driveToLine(self.rc.SPEED, self.rc.LINE)
         self.DriveTrain.driveForward(self.rc.SPEED, 11)
@@ -180,7 +182,7 @@ class DeichHandler:
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 60*(-1)**(checkPointz))
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPointz), self.rc.LINE)
         #self.DriveTrain.center("Black", direction='-1')
-        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,20)
+        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,21)
         if checkPointz in [0, 2]:
             offset = 90
         else:
@@ -197,7 +199,7 @@ class DeichHandler:
             #     self.DeichPutDown(Gameboard.humans.index(RobotContainer.getLoaded()[2]), dislocated=0)
             #     return(checkPointz)
         
-            self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -24)
+            self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -18)
             self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 90*(-1)**(checkPoint + 1))
         
         else:
@@ -211,6 +213,7 @@ class DeichHandler:
         color = RobotContainer.getLoaded()[2]
         humans = Gameboard.humans
         self.Gripper2.movemotor(100, True)
+        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -3)
 
         if color in humans:
             if dislocated == 0:
@@ -241,7 +244,7 @@ class DeichHandler:
                 self.DriveTrain.turnToLine(-self.rc.TURN_SPEED*(-1)**(checkPoint), self.rc.LINE)
                 self.DriveTrain.driveForward(self.rc.SPEED,-37)
                 self.Gripper2.movemotor(50,False)
-                self.DriveTrain.driveForward(self.rc.SPEED, 34)
+                self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION, self.rc.LINE, 32)
                 RobotContainer.setLoaded(0, None)
                 Gameboard.setBlockDelivered(color)
                 self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -90*(-1)**(checkPoint))
@@ -256,7 +259,7 @@ class DeichHandler:
         # self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
         # self.DriveTrain.center("Black")
         sleep(0.2)
-        self.DriveTrain.driveForward(self.rc.SPEED,-26.5)
+        self.DriveTrain.driveForward(self.rc.SPEED,-28)
         self.Gripper.moveMotor(100,-210)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*140)
         self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint),"Black")
