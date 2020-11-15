@@ -9,10 +9,8 @@ class OrderHandling:
         self.driveTrain = driveTrain
     
     def deliverOrder(self, checkpoint):
-        self.driveTrain.driveForward(100, 5)
-        self.driveTrain.driveForward(100, -5)
-        self.driveTrain.driveForward(100, 5)
-        self.driveTrain.driveForward(RobotContainer.SLOW_SPEED, -4)
+        self.driveTrain.driveForward(50, 5)
+        self.driveTrain.driveForward(100, -3)
         Gameboard.setOrderDelivered(checkpoint)
 
     def scannhouse(self, checkpoint):
@@ -37,7 +35,7 @@ class OrderHandling:
         time.sleep(0.1)
     
     def scannhouse2(self,chekpoint):
-        self.driveTrain.driveForward(50,4)
+        self.driveTrain.driveForward(50,2)
         time.sleep(0.1)
         print(Gameboard.house_p)
 

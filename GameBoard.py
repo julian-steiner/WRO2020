@@ -183,24 +183,21 @@ class Gameboard:
         print(bricks)
         print(houses)
         print(humans)
-
-        # #check if robot has to scan the house
-        # if houses[checkpoint] == 0:
-        #     return [3, checkpoint]
-        
-        #check if robot has to deliver the EvacuationOrder
-        # if houses[checkpoint] not in ["None", 0] and checkpoint not in deliveredOrders:
-            # return [0, checkpoint]
         
         #check if robot is loaded
         if loaded_bag != None:
-            bagDistance = Gameboard.getDistance(checkpoint, houses.index(loaded_bag))
+            if loaded_bag in houses:
+                bagDistance = Gameboard.getDistance(checkpoint, houses.index(loaded_bag))
         if loaded_brick != None:
-            brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
+            if loaded_brick in humans:
+                brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
+        
+        if houses[checkpoint] not in [None, "None", 0] and checkpoint not in Gameboard.deliveredOrders:
+            return [0, checkpoint]
 
         #return which item to put down
         if bagDistance != 3 or brickDistance != 3:
-            if bagDistance > brickDistance:
+            if brickDistance <= bagDistance:
                 return [2, humans.index(loaded_brick)]
             else:
                 return [1, houses.index(loaded_bag)]
@@ -252,16 +249,34 @@ class Gameboard:
             for i in range(4):
                 if i in todoBags and i in todoBlocks:
                     mPickup_possibilities.append(i)
-
+            
             for possibility in mWithout_possibilities:
                     for house in house_positions:
                         if Gameboard.getDistance(house, possibility) == 1:
                             return [9, house]
+                        
+                        
+            #check to scan a worst case szenario
+            # print("Houses" + str(houses.count(0)))
+            # print("possibilities " + str(mWithout_possibilities))
+            # if(houses.count(0) == 0):
+            #     for possibility in mWithout_possibilities:
+            #         for house in house_positions:
+            #             print("Checked worst case")
+            #             if Gameboard.getDistance(house, possibility) == 2:
+            #                 return [6, possibility]
 
-            for possibility in mPickup_possibilities:
-                    for house in house_positions:
-                        if Gameboard.getDistance(house, possibility):
-                            return [10, possibility]
+            # for possibility in mPickup_possibilities:
+            #         for house in house_positions:
+            #             if Gameboard.getDistance(house, possibility):
+            #                 return [10, possibility]
+            if len(mPickup_possibilities) > 0:
+                distances = [3, 3, 3, 3]
+                for i in range(4):
+                    if i in mPickup_possibilities:
+                        distances[i] = Gameboard.getDistance(checkpoint, i)
+                return [10, distances.index(min(distances))]
+
             
             if len(todoBlocks) > 0:
                 distances = [3, 3, 3, 3]
@@ -277,12 +292,5 @@ class Gameboard:
                 if distances.count(3) != 4:
                     return [7, min(distances)]
             
-        #check to scan a worst case szenario
-        if(houses.count(0) == 0):
-            for possibility in m_possibilities:
-                for house in house_positions:
-                    if Gameboard.getDistance(house, possibility) == 2:
-                        return [6, possibility]
-        
         #return to drive to r6
         return [11, 6]
