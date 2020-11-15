@@ -22,9 +22,9 @@ orderHandler = OrderHandling(driveTrain, gripper)
 
 # driveTrain.turnToHouse(1)
 
-s_point = "R3"
+s_point = "R6"
 
-driveTrain.driveCheckpoints(s_point, 3, 0, 0, '11')
+driveTrain.driveCheckpoints(s_point, 0, 0, 0, '11')
 
 checkpoint = 0
 offset = 0
@@ -32,11 +32,11 @@ offset = 0
 Motors.Gripper1.colorSensor.rgb
 Motors.Gripper2.colorSensor.rgb
 Gameboard.setHouse(0, "Blue")
-Gameboard.setHouse(1, "Green")
+Gameboard.setHouse(3, "Green")
 Gameboard.setBrick(2, "Yellow")
-Gameboard.setBrick(3, "Red")
+Gameboard.setBrick(1, "Red")
 Gameboard.setSand(2, "Blue")
-Gameboard.setSand(3, "Green")
+Gameboard.setSand(1, "Green")
 Gameboard.setHuman(0, "Red")
 Gameboard.setHuman(1, "Yellow")
 Gameboard.bricksArranged = []

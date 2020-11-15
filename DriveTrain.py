@@ -186,14 +186,14 @@ class DriveTrain:
     def driveCheckpoints(self, point1, point2, s_offset, e_offset, end_distance = '11'): 
         print(point1, point2)
         print(s_offset, e_offset)
-        long_distance = 128
+        # long_distance = 128
         end_distance = float(end_distance)
         if point1 == point2:
             print("TURN" + str(e_offset - s_offset))
             self.turnAngle(self.rc.TURN_SPEED, e_offset - s_offset)
             return
-            if point1  == "1":
-                self.turnToLine(self.rc.TURN_SPEED, "Blue")
+            # if point1  == "1":
+            #     self.turnToLine(self.rc.TURN_SPEED, "Blue")
             
         if point1 == 0:
             if point2 == 1:

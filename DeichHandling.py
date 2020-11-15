@@ -138,10 +138,10 @@ class DeichHandler:
         self.DriveTrain.driveForward(self.rc.SPEED, -25)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 90*(-1)**(checkPoint))
 
-        if checkPoint == 0 or checkPoint == 2:
-            angle = -90
-        else:
-            angle = 90
+        # if checkPoint == 0 or checkPoint == 2:
+        #     angle = -90
+        # else:
+        #     angle = 90
         sleep(0.5)
 # Drive to the blocks
         self.DriveTrain.driveForward(50, 20)
