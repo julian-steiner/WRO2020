@@ -227,35 +227,31 @@ class DeichHandler:
     def WorstCase(self,checkPoint):
         self.DriveTrain.driveForward(self.rc.SPEED,1.5)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED,90*(-1)**(checkPoint + 1))
-        # self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint + 1),"Black")
-        # self.DriveTrain.center("Black")
         sleep(0.2)
         self.DriveTrain.driveForward(self.rc.SPEED,-26.5)
-        self.Gripper.moveMotor(60,-180)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*140)
-        self.DriveTrain.turnToLine(self.rc.TURN_SPEED*(-1)**(checkPoint),"Black")
-        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*130)
-        # self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint)*20)
+        self.Gripper.moveMotor(40,-210)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint + 1)*135)
         sleep(0.2)
         self.Gripper.moveMotor(100,210)
         sleep(0.2)
 # Scannen
-        self.DriveTrain.driveForward(self.rc.SPEED,-23)
-        c_color = self.Gripper2.RomerColorPU()
-        Gameboard.setBrick(checkPoint,c_color)
-# Drehen
-        self.DriveTrain.driveForward(self.rc.SPEED,23)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint)*180)
+        self.DriveTrain.center("Black",-1)
+        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,75)
 # Seite wechslen
-        self.DriveTrain.driveForward(self.rc.SPEED,-85)
+        self.DriveTrain.driveForward(self.rc.SPEED,-3)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,180*(-1)**(checkPoint))
+        self.DriveTrain.driveForward(self.rc.SPEED,-28)
         if checkPoint % 2 == 1:
             checkPointz = checkPoint - 1
         if checkPoint % 2 == 0:
             checkPointz = checkPoint + 1
-        color = Gameboard.bricks[checkPointz]
+        color = self.Gripper2.RomerColorPU()
+        print(color)
+        Gameboard.setBrick(checkPointz,color)
         if color in Gameboard.humans:
             self.Gripper2.movemotor(100,True)
             RobotContainer.setLoaded(0, color)
+        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION,self.rc.LINE,1)
         self.driveToPoint(checkPointz)
 
         return checkPointz

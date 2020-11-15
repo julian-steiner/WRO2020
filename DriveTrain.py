@@ -169,6 +169,8 @@ class DriveTrain:
             
         if point1 == 0:
             if point2 == 1:
+                # self.turnAngle(self.rc.TURN_SPEED, 170 - s_offset)
+                # self.turnToLine(self.rc.TURN_SPEED*(-1)**(point1 + 1),self.rc.BLUELINE)
                 self.turnAngle(self.rc.TURN_SPEED, 180 - s_offset)
                 self.followToLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, self.rc.LINE)
                 self.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.BLUELINE, end_distance)
