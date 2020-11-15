@@ -21,9 +21,7 @@ class DriveTrain:
                     self.tank_drive.on(speed, speed + self.rc.LOW_AGGRESSION)
                 else:
                     self.tank_drive.on(speed + self.rc.LOW_AGGRESSION, speed)
-                        
-            # leftColor = self.driveColorLeft.color_name
-            # rightColor = self.driveColorRight.color_name
+
             leftColor = Motors.DriveTrain.driveColorLeft.color_name
             rightColor = Motors.DriveTrain.driveColorRight.color_name
 

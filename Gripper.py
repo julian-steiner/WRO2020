@@ -28,6 +28,13 @@ class Gripper:
 
         return getColor(Motors.Gripper1.colorSensor.rgb)
 
+    def getCardColor(self):
+        #scan the card, distance is 2 cm near the line
+        rgb = Motors.Gripper1.colorSensor.rgb
+        if(rgb[1] > 4):
+            return "Yellow"
+        return "Red"
+
     def RomerColor(self, color1, color2, color3, colorname1, colorname2, colorname3):
         def convertColor(num):
             if num == 0:

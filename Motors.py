@@ -16,3 +16,12 @@ class Motors:
     class Gripper2:
         gripperMotor = MediumMotor(OUTPUT_D)
         colorSensor = ColorSensor(INPUT_2)
+    
+def colorRecognition(test_val, color_rgbs, color_names):
+    differences = []
+    for color in color_rgbs:
+        color_diff = 0
+        for a in range(3):
+            color_diff += (color[a] - test_val[a])**2
+        differences.append(color_diff)
+    return color_names[differences.index(min(differences))]

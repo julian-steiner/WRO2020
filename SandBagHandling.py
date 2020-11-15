@@ -1,4 +1,4 @@
-from Gripper import Gripper
+import Gripper
 from Motors import Motors
 from RobotContainer import RobotContainer
 from DriveTrain import DriveTrain
@@ -20,7 +20,9 @@ class BagHandler:
         self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.LINE, 8)
         self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, 9)
         
-        color = self.Gripper.RomerColor([0, 10, 3] ,[0, 7, 35], [200, 200, 200], "Green", "Blue", "None")
+        # color = self.Gripper.RomerColor([0, 10, 3] ,[0, 7, 35], [200, 200, 200], "Green", "Blue", "None")
+        color = self.Gripper.getColor()
+        
         print("[scanBags]   RGB value:  " + str(Motors.Gripper1.colorSensor.rgb))
         print("[scanBags]   Color of the bags is:    " + str(color))
         Gameboard.setSand(startPoint, color)
