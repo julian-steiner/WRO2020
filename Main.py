@@ -26,7 +26,7 @@ s_point = "R3"
 
 driveTrain.driveCheckpoints(s_point, 3, 0, 0, '11')
 
-checkpoint = 3
+checkpoint = 0
 offset = 0
 
 Motors.Gripper1.colorSensor.rgb

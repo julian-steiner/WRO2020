@@ -310,7 +310,9 @@ class DeichHandler:
         self.DriveTrain.driveForward(self.rc.SPEED,23)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED,(-1)**(checkPoint)*179)
 # Seite wechslen
-        self.DriveTrain.driveForward(self.rc.SPEED,-85)
+        self.DriveTrain.driveForward(self.rc.SPEED,-3)
+        self.DriveTrain.turnAngle(self.rc.TURN_SPEED,180*(-1)**(checkPoint))
+        self.DriveTrain.driveForward(self.rc.SPEED,-28)
         if checkPoint % 2 == 1:
             checkPointz = checkPoint - 1
         if checkPoint % 2 == 0:

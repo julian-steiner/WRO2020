@@ -9,7 +9,7 @@ class RobotContainer:
     WHEEL_DISTANCE = 8.2
     # WHEEL_DISTANCE = 8.3
     SPEED = 50
-    FAST_SPEED = 60
+    FAST_SPEED = 70
     SLOW_SPEED = 30
     AGGRESSION = 8
     LOW_AGGRESSION = 4

@@ -40,9 +40,8 @@ class BagHandler:
         self.DriveTrain.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, self.rc.LINE, 3)
         self.DriveTrain.center("Black", direction = (-1)** (startPoint-1))
         self.Gripper.lowerMotor(-40)
-        self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 12.5)
-        sleep(1)
-        self.Gripper.moveMotor(10, 150)
+        self.DriveTrain.driveForward(self.rc.SPEED, 13)
+        self.Gripper.moveMotor(10, 145)
         RobotContainer.setLoaded(Gameboard.sand[startPoint], 0)
 
         if driveBack == "1":
@@ -52,22 +51,22 @@ class BagHandler:
             self.DriveTrain.driveForward(self.rc.SLOW_SPEED, 6)
         
     def deliver(self, startPoint, offset):
-        self.DriveTrain.followLine(self.rc.SPEED, self.rc.AGGRESSION, self.rc.BLUELINE + self.rc.REDLINE, 10)
-        self.DriveTrain.driveForward(self.rc.SPEED, -5)        
+        self.DriveTrain.followLine(self.rc.SPEED,self.rc.AGGRESSION, ["Red", "Yellow", "Blue", "Green"],14)
+        self.DriveTrain.driveForward(self.rc.SPEED,8)
+        sleep(0.1)
+        self.DriveTrain.driveForward(self.rc.SPEED,-22)
         self.Gripper.moveMotor(20, 1)
         self.DriveTrain.driveForward(self.rc.SLOW_SPEED, -12)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 9)
-        self.Gripper.lowerMotor(-30)
+        self.Gripper.lowerMotor(-25)
         self.DriveTrain.driveForward(self.rc.APPROACH_SPEED, -2)
         self.Gripper.moveMotor(10, 160)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, -12)
-        self.Gripper.lowerMotor(-80)
-        self.Gripper.lowerMotor(100)
+        self.Gripper.lowerMotor(-48)
+        self.Gripper.lowerMotor(70)
         self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 5)
         Gameboard.setBagDelivered(RobotContainer.getLoaded()[1])
         RobotContainer.setLoaded(None, 0)
-        self.DriveTrain.turnAngle(self.rc.TURN_SPEED, 180)
-        self.DriveTrain.driveForward(self.rc.SPEED, -15)
-       
-        # self.DriveTrain.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, ["Red", "Yellow", "Blue", "Green"], 2)
+        self.DriveTrain.followLine(self.rc.SLOW_SPEED, self.rc.AGGRESSION, ["Red", "Yellow", "Blue", "Green"], 21)
+        self.DriveTrain.driveForward(self.rc.SPEED,-21)
 

@@ -223,14 +223,11 @@ class Gameboard:
         #check to scan a house
         if 0 in houses:
             positions = []
-            distances = [3, 3, 3, 3]
             for i in range(4):
                 if(houses[i] == 0):
                     positions.append(i)
-                    distances[i] = Gameboard.getDistance(checkpoint,i)
-
             if len(positions) != 0:
-                return 3, distances.index(min(distances))
+                return [3, min(positions)]
 
         #check to get sand bags
         if len(deliveredBags) < 2 or len(deliveredBlocks) < 2:
