@@ -1,5 +1,5 @@
-from DriveTrain import DriveTrain
 import RobotContainer as rc
+
 class Gameboard:
     house_c = ""
     bricks_c = ""
@@ -162,8 +162,12 @@ class Gameboard:
             return 1
         elif p1 in [2, 3] and p2 in [2, 3]:
             return 1
-        else:
+        elif p1 in [0, 1] and p2 in [2, 3]:
             return 2
+        elif p1 in [2, 3] and p2 in [0, 1]:
+            return 2
+        else:
+            return 3
     
     @staticmethod
     def calculateMove(checkpoint):
