@@ -56,10 +56,10 @@ while checkpoint != 6:
     elif action[0] == 3:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
         checkpoint = action[1]
-        orderHandler.scannhouse(checkpoint, True)
+        orderHandler.scannhouse(checkpoint)
         offset = 0
     elif action[0] == 4:
-        checkpoint = deichHandler.männliDriver(chekpoint,True)
+        checkpoint = deichHandler.männliDriver(checkpoint, True)
         offset = 180
     elif action[0] == 5:
         deichHandler.scanHumans(checkpoint, True)
