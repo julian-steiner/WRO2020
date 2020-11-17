@@ -16,15 +16,18 @@ class Gripper:
     def moveMotor(self, speed, degrees):
         Motors.Gripper1.gripperMotor.on_for_degrees(speed, degrees)
 
-    def getColor(self):
+    def getColor(self, scann):
         #get the color
         corr_factor = 1.4
         def getColor(color):
             if(color[1]*corr_factor <= color[2]):
+                if scann == True:
+                    print("Blue")
                 return "Blue"
             else:
+                if scann == True:
+                    print("Green")
                 return "Green"
-            return "No color"
 
         return getColor(Motors.Gripper1.colorSensor.rgb)
 

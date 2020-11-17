@@ -56,16 +56,13 @@ while checkpoint != 6:
     elif action[0] == 3:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
         checkpoint = action[1]
-        orderHandler.scannhouse(checkpoint)
+        orderHandler.scannhouse(checkpoint, True)
         offset = 0
     elif action[0] == 4:
-        deichHandler.scanHumans(checkpoint, 0)
-        checkpoint = deichHandler.scanBlocks(checkpoint)
+        checkpoint = deichHandler.männliDriver(chekpoint,True)
         offset = 180
     elif action[0] == 5:
-        deichHandler.scanHumans(checkpoint, 0)
-        # driveTrain.turnAngle(RobotContainer.TURN_SPEED, 180)
-        # driveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.LINE, 22)
+        deichHandler.scanHumans(checkpoint, True)
         driveTrain.driveForward(RobotContainer.SPEED, -22)
         driveTrain.turnAngle(RobotContainer.TURN_SPEED, -90 * (-1) ** checkpoint)
     elif action[0] == 6:
@@ -76,7 +73,7 @@ while checkpoint != 6:
     elif action[0] == 7:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
         checkpoint = action[1]
-        bagHandler.pickUp(checkpoint)
+        bagHandler.pickUp(checkpoint, False)
         offset = 180
     elif action[0] == 8:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
@@ -86,7 +83,7 @@ while checkpoint != 6:
     elif action[0] == 9:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
         checkpoint = action[1]
-        checkpoint = deichHandler.männliDriver(checkpoint)
+        checkpoint = deichHandler.männliDriver(checkpoint, False)
         offset = 180
     elif action[0] == 10:
         driveTrain.driveCheckpoints(checkpoint, action[1], offset, 0)
