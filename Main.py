@@ -21,7 +21,7 @@ orderHandler = OrderHandling(driveTrain, gripper)
 
 checkpoint = 0
 offset = 0
-driveTrain.driveCheckpoints(6, 0, offset, 0, '11')
+driveTrain.driveCheckpoints("R6", 0, offset, 0, '11')
 
 # checkpoint = 3
 # offset = 0
@@ -33,10 +33,10 @@ Gameboard.setHouse(3, "Green")
 Gameboard.setHuman(3, "Yellow")
 Gameboard.setHuman(0, "Red")
 Gameboard.setBrick(2, "Yellow")
-Gameboard.bricksArranged = []
 Gameboard.setSand(1, "Green")
+Gameboard.bricksArranged = []
 
-while checkpoint != 6:
+while checkpoint != "R6":
     action = Gameboard.calculateMove(checkpoint)
     print("[Main]   Action:  " + str(action))
     print("[Main]   Offset:  " + str(offset))
@@ -91,6 +91,6 @@ while checkpoint != 6:
         deichHandler.pickUpBoth(checkpoint)
         offset = 180
     elif action[0] == 11:
-        driveTrain.driveCheckpoints(checkpoint, 6, offset, 0)
-        checkpoint = 6
+        driveTrain.driveCheckpoints(checkpoint, "R6", offset, 0)
+        checkpoint = "R6"
         offset = 0

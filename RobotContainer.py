@@ -11,7 +11,7 @@ class RobotContainer:
     SPEED = 50
     FAST_SPEED = 60
     SLOW_SPEED = 30
-    AGGRESSION = 7
+    AGGRESSION = 6
     LOW_AGGRESSION = 4
     APPROACH_SPEED = 20
     TURN_SPEED = 20

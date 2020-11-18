@@ -64,10 +64,9 @@ class DeichHandler:
             self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED,-5)
         
     def scanBlocks(self, checkPoint, scann):
-        männli = Gameboard.humans
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, (-1)**(checkPoint + 1)*90)
         sleep(0.5)
-        self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED, 20)
+        self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED, 25)
         self.DriveTrain.driveForward(RobotContainer.FAST_SPEED,-95)
         if checkPoint % 2 == 1:
             checkPointz = checkPoint - 1
@@ -124,16 +123,19 @@ class DeichHandler:
 
     def männliDriver(self, checkPoint, scann):
         self.scanHumans(checkPoint,scann)
+        print("incident checkpoint  " + str(checkPoint))
 
         color = self.scanBlocks(checkPoint,scann)
         if checkPoint % 2 == 1:
             checkPoint -= 1
-        if checkPoint % 2 == 0:
+        elif checkPoint % 2 == 0:
             checkPoint += 1
         
         # Drive To Point
         sleep(0.5)
         self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,9)
+        print("checkpoint   " + str(checkPoint))
+        print("männlidriver angle   " + str(90*(-1)**(checkPoint)))
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPoint))
         self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,19)
         if color != "None":

@@ -114,19 +114,20 @@ class DriveTrain:
 
     def center(self, color, direction = 1):
         speed = 5
+        correction = 10
         if(direction == 1):
             while Motors.DriveTrain.driveColorLeft.color_name != color:
                 self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
             while Motors.DriveTrain.driveColorRight.color_name != color:
                 self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
-            self.turnAngle(5,  -10)
+            self.turnAngle(5,  -correction)
             self.tank_drive.off()
         else:
             while Motors.DriveTrain.driveColorRight.color_name != color:
                 self.tank_drive.on(SpeedPercent(-speed), SpeedPercent(speed))
             while Motors.DriveTrain.driveColorLeft.color_name != color:
                 self.tank_drive.on(SpeedPercent(speed), SpeedPercent(-speed))
-            self.turnAngle(5,  10)
+            self.turnAngle(5,  correction)
             self.tank_drive.off()
                     
     def turnToLine(self, speed, lineColor):
@@ -135,12 +136,12 @@ class DriveTrain:
         if(speed > 0):
             while Motors.DriveTrain.driveColorRight.color_name not in lineColor:
                 pass
-            self.turnAngle(speed, 6)
+            self.turnAngle(speed, 5)
             self.tank_drive.stop()
         else:
             while Motors.DriveTrain.driveColorLeft.color_name not in lineColor:
                 pass
-            self.turnAngle(speed, 6)
+            self.turnAngle(speed, 5)
             self.tank_drive.stop()
 
     # complex drive functions
@@ -148,10 +149,12 @@ class DriveTrain:
     def driveCheckpoints(self, point1, point2, s_offset, e_offset, end_distance = '12'): 
         long_distance = 128
         end_distance = float(end_distance)
+        if  Gameboard.deliveredBags in Gameboard.houses:
+            end_distance = '10'
         
         # case if the bot is already at the point
         if point1 == point2:
-            self.turnAngle(RobotContainer.TURN_SPEED, 180 - s_offset)
+            self.turnAngle(RobotContainer.TURN_SPEED, -s_offset)
         
         # set the line colors 
         if point1 in [0, 1]:
