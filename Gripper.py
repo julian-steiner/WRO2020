@@ -34,7 +34,7 @@ class Gripper:
     def getCardColor(self):
         #scan the card, distance is 2 cm near the line
         rgb = Motors.Gripper1.colorSensor.rgb
-        if(rgb[1] > 4):
+        if(rgb[1] > 5):
             return "Yellow"
         return "Red"
 

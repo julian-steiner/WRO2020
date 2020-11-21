@@ -10,6 +10,7 @@ class DriveTrain:
     def __init__(self):
         self.tank_drive = MoveTank(Motors.DriveTrain.leftPort, Motors.DriveTrain.rightPort)
         self.tank_drive.set_polarity("inversed")
+        print("INitialized driveTrain")
         
     #getter
     def getSensorStates(self, colors):
@@ -68,7 +69,7 @@ class DriveTrain:
                     self.tank_drive.on(speed, speed + RobotContainer.LOW_AGGRESSION)
                 else:
                     self.tank_drive.on(speed + RobotContainer.LOW_AGGRESSION, speed)
-
+            
             leftColor = Motors.DriveTrain.driveColorLeft.color_name
             rightColor = Motors.DriveTrain.driveColorRight.color_name
 
@@ -90,6 +91,7 @@ class DriveTrain:
             Motors.DriveTrain.driveLeft.reset()
             Motors.DriveTrain.driveRight.reset()
             self.tank_drive.set_polarity("inversed")
+            print("Resetted DriveTrain")
             motor1 = Motors.DriveTrain.driveLeft.rotations
             motor2 = Motors.DriveTrain.driveRight.rotations
             dist = (motor1 + motor2) / 2
@@ -198,7 +200,7 @@ class DriveTrain:
         #drive from the startPoint to the checkpoint
         elif point1 in ["R5", "R6"] and point2 in [0, 1, 2, 3]:
             if point2 in [0,  1] and point1 == "R6" or point2 in [2, 3] and point1 == "R5":
-                dist = 24
+                dist = 25
             else:
                 dist = 100
             self.driveForward(RobotContainer.SPEED, dist)

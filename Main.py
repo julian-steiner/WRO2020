@@ -26,20 +26,22 @@ driveTrain.driveCheckpoints("R6", 0, offset, 0, '11')
 # checkpoint = 3
 # offset = 0
 # driveTrain.driveCheckpoints(6, 3, offset, 0, '11')
+
 Motors.Gripper1.colorSensor.rgb
 Motors.Gripper2.colorSensor.rgb
 Gameboard.setHouse(0, "Blue")
 Gameboard.setHouse(3, "Green")
-Gameboard.setHuman(3, "Yellow")
-Gameboard.setHuman(0, "Red")
-Gameboard.setBrick(2, "Yellow")
-Gameboard.setSand(1, "Green")
-Gameboard.bricksArranged = []
+# Gameboard.setHuman(3, "Yellow")
+# Gameboard.setHuman(0, "Red")
+# Gameboard.setBrick(2, "Yellow")
+# Gameboard.setSand(1, "Green")
+# Gameboard.bricksArranged = []
 
 while checkpoint != "R6":
     action = Gameboard.calculateMove(checkpoint)
     print("[Main]   Action:  " + str(action))
     print("[Main]   Offset:  " + str(offset))
+    
     print("[Main]   Checkpoint:  "  + str(checkpoint))
     if action[0] == 0:
         Gameboard.setOrderDelivered(action[1])

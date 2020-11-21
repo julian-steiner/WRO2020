@@ -40,7 +40,7 @@ class DeichHandler:
         RobotContainer.setLoaded(0, Gameboard.bricks[checkPoint])
         self.DriveTrain.driveForward(RobotContainer.SPEED,13)
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, angle)
-        self.DriveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.LINE, 18)
+        self.DriveTrain.followLine(RobotContainer.SPEED, RobotContainer.AGGRESSION, RobotContainer.LINE, 24)
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, e_offset + angle)
     
     def pickUpBoth(self, checkPoint):
@@ -49,13 +49,20 @@ class DeichHandler:
         self.DeichPickUp(checkPoint)
     
     def scanHumans(self, checkPoint, scann):
-        self.DriveTrain.driveForward(RobotContainer.SPEED, -2)
-        self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED,90*(-1)**(checkPoint))
+        if Gameboard.houses[checkPoint] in Gameboard.deliveredBags:
+            dist = -4
+            angle = 88
+        else:
+            dist = -2
+            angle = 90
+        self.DriveTrain.driveForward(RobotContainer.SPEED, dist)
+        self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED,angle*(-1)**(checkPoint))
         self.DriveTrain.driveToLine(RobotContainer.SPEED, RobotContainer.LINE)
-        self.DriveTrain.driveForward(RobotContainer.SPEED, 11)
-        
+        self.DriveTrain.driveForward(RobotContainer.SPEED, 9)
+        if checkPoint == 3:
+            self.DriveTrain.driveForward(RobotContainer.SPEED, 2)
         if scann == True:
-            self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED,5)
+            self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED,6)
             c_color = self.Gripper.getCardColor()
             log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
             log(c_color, "Color of the front sensor")
@@ -66,12 +73,13 @@ class DeichHandler:
     def scanBlocks(self, checkPoint, scann):
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, (-1)**(checkPoint + 1)*90)
         sleep(0.5)
-        self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED, 25)
+        self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED, 26)
         self.DriveTrain.driveForward(RobotContainer.FAST_SPEED,-95)
         if checkPoint % 2 == 1:
             checkPointz = checkPoint - 1
         if checkPoint % 2 == 0:
             checkPointz = checkPoint + 1
+
         # Farb bestimmung
         if scann == True:
             c_color = self.Gripper2.RomerColorPU()
@@ -80,46 +88,17 @@ class DeichHandler:
             Gameboard.setBrick(checkPointz, c_color)
         else:
             c_color = Gameboard.bricks[checkPointz]
+            
         # Aufnehmen
         if c_color != "None":
+            sleep(0.1)
+            self.DriveTrain.driveForward(RobotContainer.SPEED,-3)
             self.Gripper2.movemotor(100,True)
             RobotContainer.setLoaded(0, c_color)
         elif c_color == "None":
             self.DriveTrain.driveForward(RobotContainer.SPEED, 9)
         
         return checkPointz
-
-    # def driveToPoint(self, checkPointz):
-    #     sleep(0.5)
-    #     self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,6)
-    #     self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 60*(-1)**(checkPointz))
-    #     self.DriveTrain.turnToLine(RobotContainer.TURN_SPEED*(-1)**(checkPointz), RobotContainer.LINE)
-    #     self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,18)
-    #     if checkPointz in [0, 2]:
-    #         offset = -90
-    #     else:
-    #         offset = 90
-    #     if(Gameboard.bricks[checkPointz] != "None"):
-    #         self.baghandler.pickUp(checkPointz, True)
-    #     if RobotContainer.getLoaded()[2] != None and RobotContainer.getLoaded()[2] in Gameboard.humans:
-    #         if(Gameboard.getDistance(checkPointz, Gameboard.humans.index(RobotContainer.getLoaded()[2])) == 1):
-    #             checkPointz = self.DeichPutDown(checkPointz, dislocated=0)
-    #             return(checkPointz)
-
-    #     if(Gameboard.bricks[checkPointz] != "None"):
-    #         self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED, -22)
-    #         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPointz))
-        
-    #     else:
-    #         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPointz+1))
-    #         self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED, 2)
-    #         if checkPointz in [0, 1]:
-    #             Gameboard.setHuman(2, "None")
-    #             Gameboard.setHuman(3, "None")
-    #         else:
-    #             Gameboard.setHuman(0, "None")
-    #             Gameboard.setHuman(1, "None")
-    #     return checkPointz
 
     def männliDriver(self, checkPoint, scann):
         self.scanHumans(checkPoint,scann)
@@ -133,7 +112,8 @@ class DeichHandler:
         
         # Drive To Point
         sleep(0.5)
-        self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,9)
+        # old values 11, 18
+        self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,11)
         print("checkpoint   " + str(checkPoint))
         print("männlidriver angle   " + str(90*(-1)**(checkPoint)))
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPoint))
@@ -155,7 +135,8 @@ class DeichHandler:
         self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED, -2)
 
         if color in humans:
-            self.DriveTrain.turnToLine(-RobotContainer.TURN_SPEED*(-1)**(checkPoint), RobotContainer.LINE)
+            # self.DriveTrain.turnToLine(-RobotContainer.TURN_SPEED*(-1)**(checkPoint), RobotContainer.LINE)
+            self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, -90*(-1)**checkPoint)
             self.DriveTrain.driveForward(RobotContainer.SPEED,-37)
             self.Gripper2.movemotor(50,False)
             self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION, RobotContainer.LINE, 32)

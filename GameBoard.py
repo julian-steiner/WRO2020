@@ -183,10 +183,10 @@ class Gameboard:
         deliveredBlocks = Gameboard.deliveredBlocks
         bagDistance = 3
         brickDistance = 3
-        print(bags)
-        print(bricks)
-        print(houses)
-        print(humans)
+        print("BAGS:    " + str(bags))
+        print("BRICKS:  " + str(bricks))
+        print("HOUSES:  "  + str(houses))
+        print("HUMANS:  "    + str(humans))
 
         # #check if robot has to scan the house
         # if houses[checkpoint] == 0:
@@ -198,9 +198,11 @@ class Gameboard:
         
         #check if robot is loaded
         if loaded_bag != None:
-            bagDistance = Gameboard.getDistance(checkpoint, houses.index(loaded_bag))
+            if loaded_bag in houses:
+                bagDistance = Gameboard.getDistance(checkpoint, houses.index(loaded_bag))
         if loaded_brick != None:
-            brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
+            if loaded_brick in humans:
+                brickDistance = Gameboard.getDistance(checkpoint, humans.index(loaded_brick))
 
         #return which item to put down
         if bagDistance != 3 or brickDistance != 3:
@@ -257,8 +259,6 @@ class Gameboard:
                 if i in todoBags and i in todoBlocks:
                     mPickup_possibilities.append(i)
             
-            print("Gameboard bricks arranged:   " + str(Gameboard.bricksArranged))
-            print("driverPossibilities: " + str(mWithout_possibilities))
             for possibility in mWithout_possibilities:
                     for house in house_positions:
                         if Gameboard.getDistance(house, possibility) == 1:
