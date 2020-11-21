@@ -49,26 +49,8 @@ class DeichHandler:
         self.DeichPickUp(checkPoint)
     
     def scanHumans(self, checkPoint, scann):
-        if Gameboard.houses[checkPoint] in Gameboard.deliveredBags:
-            dist = -4
-            angle = 88
-        else:
-            dist = -2
-            angle = 90
-        self.DriveTrain.driveForward(RobotContainer.SPEED, dist)
-        self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED,angle*(-1)**(checkPoint))
         self.DriveTrain.driveToLine(RobotContainer.SPEED, RobotContainer.LINE)
-        self.DriveTrain.driveForward(RobotContainer.SPEED, 9)
-        if checkPoint == 3:
-            self.DriveTrain.driveForward(RobotContainer.SPEED, 2)
-        if scann == True:
-            self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED,6)
-            c_color = self.Gripper.getCardColor()
-            log(Motors.Gripper1.colorSensor.rgb, "RGB Value of the front sensor")
-            log(c_color, "Color of the front sensor")
-            sleep(0.5)
-            Gameboard.setHuman(checkPoint, c_color)
-            self.DriveTrain.driveForward(RobotContainer.SLOW_SPEED,-5)
+        self.DriveTrain.driveForward(RobotContainer.FAST_SPEED, 9)
         
     def scanBlocks(self, checkPoint, scann):
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, (-1)**(checkPoint + 1)*90)
@@ -102,7 +84,6 @@ class DeichHandler:
 
     def männliDriver(self, checkPoint, scann):
         self.scanHumans(checkPoint,scann)
-        print("incident checkpoint  " + str(checkPoint))
 
         color = self.scanBlocks(checkPoint,scann)
         if checkPoint % 2 == 1:
