@@ -49,8 +49,7 @@ class DeichHandler:
         self.DeichPickUp(checkPoint)
     
     def scanHumans(self, checkPoint, scann):
-        self.DriveTrain.driveToLine(RobotContainer.SPEED, RobotContainer.LINE)
-        self.DriveTrain.driveForward(RobotContainer.FAST_SPEED, 9)
+        pass
         
     def scanBlocks(self, checkPoint, scann):
         self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, (-1)**(checkPoint + 1)*90)
@@ -84,30 +83,20 @@ class DeichHandler:
 
     def männliDriver(self, checkPoint, scann):
         self.scanHumans(checkPoint,scann)
-
-        color = self.scanBlocks(checkPoint,scann)
-        if checkPoint % 2 == 1:
-            checkPoint -= 1
-        elif checkPoint % 2 == 0:
-            checkPoint += 1
         
         # Drive To Point
         sleep(0.5)
         # old values 11, 18
-        self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,11)
-        print("checkpoint   " + str(checkPoint))
-        print("männlidriver angle   " + str(90*(-1)**(checkPoint)))
-        self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPoint))
-        self.DriveTrain.followLine(RobotContainer.SPEED,RobotContainer.AGGRESSION,RobotContainer.LINE,19)
-        if color != "None":
-            # Pickup Sandsack
-            self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPoint))
-            self.baghandler.pickUp(checkPoint,scann)
+        self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 92*(-1)**(checkPoint+1))
+        self.DriveTrain.driveForward(RobotContainer.FAST_SPEED, 20)
+        self.DriveTrain.driveForward(RobotContainer.FAST_SPEED, -95)
+        self.DriveTrain.driveForward(RobotContainer.SPEED, 1)
+        self.Gripper2.movemotor(100, 1)
+        sleep(0.5)
+        self.DriveTrain.driveForward(RobotContainer.FAST_SPEED, 12)
+        self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPoint+1))
         
-        else:
-            self.DriveTrain.turnAngle(RobotContainer.TURN_SPEED, 90*(-1)**(checkPoint + 1))
 
-        return(checkPoint)
 
     def DeichPutDown(self, checkPoint):
         color = RobotContainer.getLoaded()[2]
